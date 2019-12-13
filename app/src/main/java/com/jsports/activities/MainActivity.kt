@@ -1,7 +1,8 @@
-package com.jsports
+package com.jsports.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.jsports.R
 
 class MainActivity : AppCompatActivity() {
 
