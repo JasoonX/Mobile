@@ -13,7 +13,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitClient private constructor() {
     private val retrofit: Retrofit
-    private val AUTH = "Basic " + Base64.encodeToString("Eugene:Stalkerkryt1".toByteArray(), Base64.NO_WRAP)
     val api: Api
         get() = retrofit.create(Api::class.java)
 
@@ -23,7 +22,6 @@ class RetrofitClient private constructor() {
             .addInterceptor { chain ->
                 val original = chain.request()
                 val requestBuilder = original.newBuilder()
-                    .addHeader("Authorization", AUTH)
                     .method(original.method(), original.body())
                 val request = requestBuilder.build()
                 chain.proceed(request)
@@ -41,7 +39,7 @@ class RetrofitClient private constructor() {
     }
 
     companion object {
-        private const val BASE_URL = "http://192.168.137.1/LudusApi/public/"
+        private const val BASE_URL = "http://localhost:8080"
         private var mInstance: RetrofitClient? = null
         val instance: RetrofitClient
             @Synchronized get() {
