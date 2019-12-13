@@ -2,16 +2,12 @@ package com.jsports.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.content.Intent
+import com.jsports.R
 
-
-
-class SplashActivity : AppCompatActivity() {
+class AuthorizationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
+        setContentView(R.layout.activity_authorization)
     }
 }
