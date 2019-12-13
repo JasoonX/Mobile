@@ -1,6 +1,5 @@
 package com.jsports.api
 
-import android.util.Base64
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -39,7 +38,7 @@ class RetrofitClient private constructor() {
     }
 
     companion object {
-        private const val BASE_URL = "http://localhost:8080"
+        private const val BASE_URL = "http://10.0.2.2:8080"
         private var mInstance: RetrofitClient? = null
         val instance: RetrofitClient
             @Synchronized get() {

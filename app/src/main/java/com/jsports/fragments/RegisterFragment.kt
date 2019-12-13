@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.fragment.app.FragmentTransaction
 
 import com.jsports.R
+import com.jsports.api.responses.MessageResponse
 
 class RegisterFragment : Fragment() {
 
@@ -22,6 +23,8 @@ class RegisterFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        activity!!.title = getString(R.string.jsports_register)
+
         return inflater.inflate(R.layout.fragment_register, container, false)
     }
 

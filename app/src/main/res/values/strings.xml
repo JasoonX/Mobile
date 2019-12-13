@@ -1,6 +1,17 @@
 <resources>
     <string name="app_name">JSports</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="jsports_login">JSports - Login</string>
+    <string name="jsports_register">JSports - Register</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="submit">Submit</string>
+    <string name="username_required">Username required</string>
+    <string name="username_short">Username has to be at least 4 characters</string>
+    <string name="username_long">Username has to be less than 30 characters long</string>
+    <string name="username_wrong">Wrong username!</string>
+    <string name="password_required">Password required</string>
 </resources>
