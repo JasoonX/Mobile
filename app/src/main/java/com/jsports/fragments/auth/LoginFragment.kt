@@ -1,4 +1,4 @@
-package com.jsports.fragments
+package com.jsports.fragments.auth
 
 
 import android.content.Intent
@@ -7,9 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.FragmentTransaction
 
 import com.jsports.R
@@ -29,6 +27,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
         when (v!!.id) {
             R.id.tv_register -> swapFragmentToRegister()
             R.id.bt_login -> login()
+            R.id.tv_forgot_pass -> {}
         }
     }
 
@@ -39,6 +38,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
     private var etPassword: EditText? = null
     private var btLogin: Button? = null
     private var tvForgotPass: TextView? = null
+    private var loadingScreen:FrameLayout? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,12 +60,16 @@ class LoginFragment : Fragment(), View.OnClickListener {
         btLogin!!.setOnClickListener(this)
 
         tvForgotPass = view.findViewById(R.id.tv_forgot_pass)
+        tvForgotPass!!.setOnClickListener(this)
+
+        loadingScreen = activity!!.findViewById(R.id.auth_loading_screen)
+
         fTrans = activity!!.supportFragmentManager.beginTransaction()
         registerFragment = RegisterFragment()
     }
 
     private fun swapFragmentToRegister() {
-        fTrans!!.replace(R.id.fl_auth, registerFragment!!).commit()
+        fTrans!!.replace(R.id.fl_auth, registerFragment!!).addToBackStack(null).commit()
     }
 
     private fun login() {
@@ -73,11 +77,17 @@ class LoginFragment : Fragment(), View.OnClickListener {
         val password = etPassword!!.text.toString()
 
         if (validateCredentials(username, password)) {
+            loadingScreen!!.visibility = View.VISIBLE
             val request = LoginRequest(username,password)
             val call = RetrofitClient.instance.api.login(request)
             call.enqueue(object : Callback<LoginResponse> {
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-
+                    loadingScreen!!.visibility = View.GONE
+                    Toasty.error(
+                        activity!!,
+                        t.message!!,
+                        Toasty.LENGTH_LONG
+                    ).show()
                 }
 
                 override fun onResponse(
@@ -96,6 +106,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
                             Toasty.LENGTH_LONG
                         ).show()
                     }
+                    loadingScreen!!.visibility = View.GONE
                 }
 
             })

@@ -10,11 +10,11 @@ const val usersBase = "/users"
 
 interface Api {
     @GET("$usersBase/tokenValid")
-    fun isTokenValid(): Call<BooleanResponse>
+    fun isTokenValid(@Query("token") token: String): Call<BooleanResponse>
 
     @Headers("Content-Type: application/json")
     @POST("$usersBase/login")
     fun login(
-        @Body request:LoginRequest
+        @Body request: LoginRequest
     ): Call<LoginResponse>
 }

@@ -6,7 +6,7 @@
     android:layout_gravity="center"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".fragments.LoginFragment">
+    tools:context=".fragments.auth.LoginFragment">
 
 
     <EditText
