@@ -1,3 +1,3 @@
-package com.jsports.api.responses
+package com.jsports.api.models.responses
 
 class BooleanResponse(val result: Boolean)

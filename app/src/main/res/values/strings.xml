@@ -14,4 +14,7 @@
     <string name="username_long">Username has to be less than 30 characters long</string>
     <string name="username_wrong">Wrong username!</string>
     <string name="password_required">Password required</string>
+    <string name="email">email</string>
+    <string name="wrong_email">Wrong email</string>
+    <string name="email_required">Email required</string>
 </resources>

@@ -13,8 +13,8 @@ import androidx.fragment.app.FragmentTransaction
 import com.jsports.R
 import com.jsports.activities.MainActivity
 import com.jsports.api.RetrofitClient
-import com.jsports.api.requests.LoginRequest
-import com.jsports.api.responses.LoginResponse
+import com.jsports.api.models.requests.LoginRequest
+import com.jsports.api.models.responses.LoginResponse
 import com.jsports.storage.SharedPrefManager
 import es.dmoral.toasty.Toasty
 import org.json.JSONObject
@@ -25,9 +25,9 @@ import retrofit2.Response
 class LoginFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v!!.id) {
-            R.id.tv_register -> swapFragmentToRegister()
+            R.id.tv_register -> swapFragmentTo(registerFragment)
             R.id.bt_login -> login()
-            R.id.tv_forgot_pass -> {}
+            R.id.tv_forgot_pass -> swapFragmentTo(forgotPasswordFragment)
         }
     }
 
@@ -39,12 +39,14 @@ class LoginFragment : Fragment(), View.OnClickListener {
     private var btLogin: Button? = null
     private var tvForgotPass: TextView? = null
     private var loadingScreen:FrameLayout? = null
+    private var forgotPasswordFragment:ForgotPasswordFragment? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         activity!!.title = getString(R.string.jsports_login)
+        fTrans = activity!!.supportFragmentManager.beginTransaction()
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
@@ -64,12 +66,12 @@ class LoginFragment : Fragment(), View.OnClickListener {
 
         loadingScreen = activity!!.findViewById(R.id.auth_loading_screen)
 
-        fTrans = activity!!.supportFragmentManager.beginTransaction()
         registerFragment = RegisterFragment()
+        forgotPasswordFragment = ForgotPasswordFragment()
     }
 
-    private fun swapFragmentToRegister() {
-        fTrans!!.replace(R.id.fl_auth, registerFragment!!).addToBackStack(null).commit()
+    private fun swapFragmentTo(fragment:Fragment?) {
+        fTrans!!.replace(R.id.fl_auth, fragment!!).addToBackStack(null).commit()
     }
 
     private fun login() {

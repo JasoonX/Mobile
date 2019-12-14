@@ -3,11 +3,6 @@ package com.jsports.storage
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
-import com.jsports.api.RetrofitClient
-import com.jsports.api.responses.BooleanResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class SharedPrefManager(private val mCtx: Context) {
