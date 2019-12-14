@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">JSports</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
-    <string name="jsports_login">JSports - Login</string>
-    <string name="jsports_register">JSports - Register</string>
+    <string name="username">Ім\'я користувача</string>
+    <string name="password">Пароль</string>
+    <string name="jsports_login">JSports - Вхід</string>
+    <string name="jsports_register">JSports - Реєстрація</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="submit">Submit</string>
     <string name="username_required">Username required</string>

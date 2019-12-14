@@ -6,7 +6,8 @@ import android.content.SharedPreferences
 
 
 class SharedPrefManager(private val mCtx: Context) {
-    private val SHARED_PREFF_NAME = "my_shared_preff"
+    private val sharedPrefName = "my_shared_pref"
+    private val languageKey = "language"
     private val tokenKey = "accessToken"
 
     companion object {
@@ -23,26 +24,38 @@ class SharedPrefManager(private val mCtx: Context) {
     }
 
     fun saveToken(token:String){
-        val sharedPreferences:SharedPreferences = mCtx.getSharedPreferences(SHARED_PREFF_NAME,
+        val sharedPreferences:SharedPreferences = mCtx.getSharedPreferences(sharedPrefName,
             Context.MODE_PRIVATE)
         sharedPreferences.edit().putString(tokenKey,token).apply()
     }
 
+    fun saveLanguage(lang:String?){
+        val sharedPreferences:SharedPreferences = mCtx.getSharedPreferences(sharedPrefName,
+            Context.MODE_PRIVATE)
+        sharedPreferences.edit().putString(languageKey,lang).apply()
+    }
+
+    fun getLanguage(defaultLanguage:String?):String?{
+        val sharedPreferences:SharedPreferences = mCtx.getSharedPreferences(sharedPrefName,
+            Context.MODE_PRIVATE)
+        return sharedPreferences.getString(languageKey,defaultLanguage)
+    }
+
     fun getToken(): String{
-        val sharedPreferences:SharedPreferences = mCtx.getSharedPreferences(SHARED_PREFF_NAME,
+        val sharedPreferences:SharedPreferences = mCtx.getSharedPreferences(sharedPrefName,
             Context.MODE_PRIVATE)
         return "Bearer ${sharedPreferences.getString(tokenKey,null)!!}"
     }
 
     fun isLoggedIn():Boolean{
-        val sharedPreferences:SharedPreferences = mCtx.getSharedPreferences(SHARED_PREFF_NAME,
+        val sharedPreferences:SharedPreferences = mCtx.getSharedPreferences(sharedPrefName,
             Context.MODE_PRIVATE)
         val token = sharedPreferences.getString(tokenKey,null)
         return token != null
     }
 
     fun clear(){
-        val sharedPreferences:SharedPreferences = mCtx.getSharedPreferences(SHARED_PREFF_NAME,
+        val sharedPreferences:SharedPreferences = mCtx.getSharedPreferences(sharedPrefName,
             Context.MODE_PRIVATE)
         sharedPreferences.edit()
             .clear()

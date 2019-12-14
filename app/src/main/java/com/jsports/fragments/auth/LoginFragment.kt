@@ -3,14 +3,14 @@ package com.jsports.fragments.auth
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.*
+import android.widget.AdapterView.OnItemSelectedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-
 import com.jsports.R
 import com.jsports.activities.MainActivity
 import com.jsports.api.RetrofitClient
@@ -22,6 +22,7 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class LoginFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
@@ -39,8 +40,8 @@ class LoginFragment : Fragment(), View.OnClickListener {
     private var etPassword: EditText? = null
     private var btLogin: Button? = null
     private var tvForgotPass: TextView? = null
-    private var loadingScreen:FrameLayout? = null
-    private var forgotPasswordFragment:ForgotPasswordFragment? = null
+    private var loadingScreen: FrameLayout? = null
+    private var forgotPasswordFragment: ForgotPasswordFragment? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -80,7 +81,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
         forgotPasswordFragment = ForgotPasswordFragment()
     }
 
-    private fun swapFragmentTo(fragment:Fragment?) {
+    private fun swapFragmentTo(fragment: Fragment?) {
         fTrans!!.replace(R.id.fl_auth, fragment!!).addToBackStack(null).commit()
     }
 
@@ -90,7 +91,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
 
         if (validateCredentials(username, password)) {
             loadingScreen!!.visibility = View.VISIBLE
-            val request = LoginRequest(username,password)
+            val request = LoginRequest(username, password)
             val call = RetrofitClient.instance.api.login(request)
             call.enqueue(object : Callback<LoginResponse> {
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
@@ -108,7 +109,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
                 ) {
                     if (response.body() != null) {
                         SharedPrefManager.getInstance(activity!!).saveToken(response.body()!!.token)
-                        val intent = Intent(activity!!,MainActivity::class.java)
+                        val intent = Intent(activity!!, MainActivity::class.java)
                         startActivity(intent)
                         activity!!.finish()
                     } else {
@@ -156,4 +157,6 @@ class LoginFragment : Fragment(), View.OnClickListener {
         }
         return true
     }
+
+
 }
