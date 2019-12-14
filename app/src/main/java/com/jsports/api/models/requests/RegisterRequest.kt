@@ -9,10 +9,10 @@ class RegisterRequest(
     val username: String,
     val email: String,
     val password: String,
-    val roles:List<String> = listOf("ROLE_CLIENT"),
     val height:Float? = null,
     val weight:Float? = null,
     val born:String? = null,
     val country:String? = null,
-    val sports:List<Sport>? = null
+    val sports:List<Sport>? = null,
+    val roles:List<String> = listOf("ROLE_CLIENT")
 )

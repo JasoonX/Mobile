@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.fragment.app.FragmentTransaction
 
@@ -57,6 +58,15 @@ class LoginFragment : Fragment(), View.OnClickListener {
 
         etUsername = view.findViewById(R.id.et_login_username)
         etPassword = view.findViewById(R.id.et_login_password)
+
+        etPassword!!.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                login()
+            }
+
+            true
+
+        }
 
         btLogin = view.findViewById(R.id.bt_login)
         btLogin!!.setOnClickListener(this)
@@ -117,7 +127,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
 
     private fun validateCredentials(username: String, password: String): Boolean {
 
-        val usernameRegex = Regex("""^[a-z0-9_-]{3,16}${'$'}""")
+        val usernameRegex = Regex("""^[a-z0-9_-]{3,16}$""")
 
         when {
             username.isEmpty() -> {

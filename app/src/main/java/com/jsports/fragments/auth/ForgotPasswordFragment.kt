@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
@@ -39,6 +40,14 @@ class ForgotPasswordFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         etResetPassEmail = view.findViewById(R.id.et_reset_pass_email)
+        etResetPassEmail!!.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                resetPassSubmit()
+            }
+
+            true
+
+        }
 
         buttonResetPassSubmit = view.findViewById(R.id.bt_reset_pass_submit)
         buttonResetPassSubmit!!.setOnClickListener(this)
@@ -48,11 +57,11 @@ class ForgotPasswordFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v!!.id) {
-            R.id.bt_reset_pass_submit -> resetPassSubmitPressed()
+            R.id.bt_reset_pass_submit -> resetPassSubmit()
         }
     }
 
-    private fun resetPassSubmitPressed() {
+    private fun resetPassSubmit() {
         val email: String = etResetPassEmail!!.text.toString()
 
         if (validateEmail(email)) {

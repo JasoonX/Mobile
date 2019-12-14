@@ -6,10 +6,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-
-
-
-
 class RetrofitClient private constructor() {
     private val retrofit: Retrofit
     val api: Api
@@ -22,7 +18,9 @@ class RetrofitClient private constructor() {
                 val original = chain.request()
                 val requestBuilder = original.newBuilder()
                     .method(original.method(), original.body())
-                val request = requestBuilder.build()
+                val request = requestBuilder
+                    .addHeader("Content-Type", "application/json")
+                    .build()
                 chain.proceed(request)
             }.build()
 

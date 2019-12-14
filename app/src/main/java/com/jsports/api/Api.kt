@@ -14,19 +14,19 @@ interface Api {
     @GET("$usersBase/tokenValid")
     fun isTokenValid(@Query("token") token: String): Call<BooleanResponse>
 
-    @Headers("Content-Type: application/json")
+
     @POST("$usersBase/login")
     fun login(
         @Body request: LoginRequest
     ): Call<LoginResponse>
 
-    @Headers("Content-Type: application/json")
+
     @POST("$usersBase/resetPassword")
     fun resetPassword(
         @Query("email") email:String
     ): Call<MessageResponse>
 
-    @Headers("Content-Type: application/json")
+
     @POST("$usersBase/register")
     fun register(
         @Body registerRequest:RegisterRequest
