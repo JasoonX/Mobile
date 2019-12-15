@@ -64,4 +64,6 @@
     <string name="number_of_people">Кількість людей:</string>
     <string name="your_events_count">Кількість ваших подій</string>
     <string name="your_events_percent">Відсоток ваших подій:</string>
+    <string name="sports">Спортивні дисципліни</string>
+    <string name="not_set">Не встановлено</string>
 </resources>

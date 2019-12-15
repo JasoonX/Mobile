@@ -1,5 +1,6 @@
 package com.jsports.api
 
+import com.jsports.api.models.User
 import com.jsports.api.models.requests.LoginRequest
 import com.jsports.api.models.requests.RegisterRequest
 import com.jsports.api.models.responses.BooleanResponse
@@ -39,4 +40,7 @@ interface Api {
 
     @GET("$sportsBase/all")
     fun getSportStatistics(): Call<List<SportStatisticsResponse>>
+
+    @GET("$usersBase/current")
+    fun getCurrentUserProfile(): Call<User>
 }
