@@ -46,4 +46,5 @@
     <string name="profile">Профіль</string>
     <string name="open">Відкрити</string>
     <string name="close">Закрити</string>
+    <string name="logout">Вийти</string>
 </resources>

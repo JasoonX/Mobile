@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.jsports.LocaleHelper
 import com.jsports.R
 import com.jsports.fragments.auth.LoginFragment
+import com.jsports.helpers.restartActivity
 
 
 class AuthorizationActivity : AppCompatActivity() {
@@ -65,10 +66,7 @@ class AuthorizationActivity : AppCompatActivity() {
             ) {
                 if (position != current) {
                     localeHelper.setLocale(baseContext,LocaleHelper.languages[position])
-                    val i = baseContext.packageManager
-                        .getLaunchIntentForPackage(baseContext.packageName)
-                    i!!.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                    startActivity(i)
+                    restartActivity(baseContext)
                 }
             }
 

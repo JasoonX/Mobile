@@ -1,6 +1,7 @@
 package com.jsports.helpers
 
 import android.content.Context
+import android.content.Intent
 import com.jsports.api.RetrofitClient
 import com.jsports.api.models.responses.BooleanResponse
 import com.jsports.storage.SharedPrefManager
@@ -25,4 +26,12 @@ fun isAuthenticated(context:Context, callback:RetrofitCallback<BooleanResponse>)
         }
 
     })
+}
+
+fun restartActivity(baseContext:Context){
+    val intent = baseContext.packageManager
+        .getLaunchIntentForPackage(baseContext.packageName)
+    intent!!.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+    baseContext.startActivity(intent)
+
 }
