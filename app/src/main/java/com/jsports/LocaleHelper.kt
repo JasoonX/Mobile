@@ -7,13 +7,8 @@ import java.util.*
 
 class LocaleHelper {
 
-    companion object{
+    companion object {
         val languages = listOf("uk", "en")
-    }
-
-    fun onAttach(context: Context?): Context? {
-        val lang = getPersistedData(context!!, Locale.getDefault().language)
-        return setLocale(context, lang)
     }
 
     fun getLanguage(context: Context): String? {
@@ -23,9 +18,9 @@ class LocaleHelper {
     fun setLocale(
         context: Context,
         language: String?
-    ): Context {
+    ) {
         persist(context, language)
-        return updateResources(context, language)
+        updateResources(context, language)
     }
 
     private fun getPersistedData(
@@ -39,15 +34,23 @@ class LocaleHelper {
         SharedPrefManager.getInstance(context).saveLanguage(language)
     }
 
+    @SuppressWarnings("deprecation")
     private fun updateResources(
         context: Context,
         language: String?
-    ): Context {
+    ) {
         val locale = Locale(language!!)
         Locale.setDefault(locale)
+
         val configuration =
             context.resources.configuration
+
         configuration.setLocale(locale)
-        return context.createConfigurationContext(configuration)
+        configuration.setLayoutDirection(locale)
+
+        context.resources.updateConfiguration(
+            configuration,
+            context.resources.displayMetrics
+        )
     }
 }

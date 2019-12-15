@@ -1,6 +1,6 @@
 package com.jsports.activities
 
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -21,9 +21,16 @@ class AuthorizationActivity : AppCompatActivity() {
 
     private var loginFragment: LoginFragment? = null
 
+    private var lang:String? = null
+
+    private var localeHelper:LocaleHelper = LocaleHelper()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authorization)
+
+        lang = intent.getStringExtra("lang")
+
         loginFragment = LoginFragment()
         fTrans.add(R.id.fl_auth, loginFragment!!)
         fTrans.commit()
@@ -37,18 +44,19 @@ class AuthorizationActivity : AppCompatActivity() {
         val adapter: ArrayAdapter<String> =
             ArrayAdapter(
                 this,
-                R.layout.support_simple_spinner_dropdown_item,
+                R.layout.spinner_item,
                 LocaleHelper.languages
             )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         val spinLanguages: Spinner = item.actionView as Spinner
 
-        val current = LocaleHelper.languages.indexOf(LocaleHelper().getLanguage(this))
+        val current = LocaleHelper.languages.indexOf(lang)
 
         spinLanguages.adapter = adapter
 
-        spinLanguages.setSelection(current!!)
+
+        spinLanguages.setSelection(current)
 
         spinLanguages.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -56,7 +64,11 @@ class AuthorizationActivity : AppCompatActivity() {
                 position: Int, id: Long
             ) {
                 if (position != current) {
-
+                    localeHelper.setLocale(baseContext,LocaleHelper.languages[position])
+                    val i = baseContext.packageManager
+                        .getLaunchIntentForPackage(baseContext.packageName)
+                    i!!.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(i)
                 }
             }
 
