@@ -43,4 +43,7 @@
     <string name="register">Зареєструйтесь</string>
     <string name="jsports_forgot_pass">JSports - Скинути пароль</string>
     <string name="jsports_home">JSports - Головна</string>
+    <string name="profile">Профіль</string>
+    <string name="open">Відкрити</string>
+    <string name="close">Закрити</string>
 </resources>

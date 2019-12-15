@@ -44,4 +44,7 @@
     <string name="register">Register</string>
     <string name="jsports_forgot_pass">JSports - Reset Password</string>
     <string name="jsports_home">JSports - Home</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="profile">Profile</string>
 </resources>
