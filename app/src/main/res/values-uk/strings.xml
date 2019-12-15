@@ -42,4 +42,5 @@
     <string name="don_t_have_an_account">У вас немає облікового запису?</string>
     <string name="register">Зареєструйтесь</string>
     <string name="jsports_forgot_pass">JSports - Скинути пароль</string>
+    <string name="jsports_home">JSports - Головна</string>
 </resources>

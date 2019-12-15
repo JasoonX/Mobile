@@ -31,4 +31,7 @@ interface Api {
     fun register(
         @Body registerRequest:RegisterRequest
     ): Call<MessageResponse>
+
+    @POST("$usersBase/logout")
+    fun logout(): Call<MessageResponse>
 }

@@ -43,4 +43,5 @@
     <string name="don_t_have_an_account">Don\'t have an account?</string>
     <string name="register">Register</string>
     <string name="jsports_forgot_pass">JSports - Reset Password</string>
+    <string name="jsports_home">JSports - Home</string>
 </resources>

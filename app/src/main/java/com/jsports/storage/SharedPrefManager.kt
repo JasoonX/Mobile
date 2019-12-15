@@ -41,10 +41,20 @@ class SharedPrefManager(private val mCtx: Context) {
         return sharedPreferences.getString(languageKey,defaultLanguage)
     }
 
-    fun getToken(): String{
+    fun getAuthToken(): String?{
         val sharedPreferences:SharedPreferences = mCtx.getSharedPreferences(sharedPrefName,
             Context.MODE_PRIVATE)
-        return "Bearer ${sharedPreferences.getString(tokenKey,null)!!}"
+        var token:String? = sharedPreferences.getString(tokenKey,null)
+        if(token != null){
+            token = "Bearer $token"
+        }
+        return token
+    }
+
+    fun getToken(): String?{
+        val sharedPreferences:SharedPreferences = mCtx.getSharedPreferences(sharedPrefName,
+            Context.MODE_PRIVATE)
+        return sharedPreferences.getString(tokenKey,null)
     }
 
     fun isLoggedIn():Boolean{
