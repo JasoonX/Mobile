@@ -119,7 +119,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
 
         if (validateRegisterRequest(registerRequest)) {
             loadingScreen!!.visibility = View.VISIBLE
-            val call = RetrofitClient.instance.api.register(registerRequest)
+            val call = RetrofitClient.getInstance(activity!!).api.register(registerRequest)
 
             call.enqueue(object : Callback<MessageResponse> {
                 override fun onFailure(call: Call<MessageResponse>, t: Throwable) {

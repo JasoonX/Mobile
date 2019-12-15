@@ -92,7 +92,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
         if (validateCredentials(username, password)) {
             loadingScreen!!.visibility = View.VISIBLE
             val request = LoginRequest(username, password)
-            val call = RetrofitClient.instance.api.login(request)
+            val call = RetrofitClient.getInstance(activity!!).api.login(request)
             call.enqueue(object : Callback<LoginResponse> {
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                     loadingScreen!!.visibility = View.GONE

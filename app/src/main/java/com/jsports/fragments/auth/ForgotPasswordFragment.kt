@@ -32,7 +32,7 @@ class ForgotPasswordFragment : Fragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        activity!!.title = "JSports - Reset Password"
+        activity!!.title = getString(R.string.jsports_forgot_pass)
         return inflater.inflate(R.layout.fragment_forgot_password, container, false)
     }
 
@@ -66,7 +66,7 @@ class ForgotPasswordFragment : Fragment(), View.OnClickListener {
 
         if (validateEmail(email)) {
             loadingScreen!!.visibility = View.VISIBLE
-            val call = RetrofitClient.instance.api.resetPassword(email)
+            val call = RetrofitClient.getInstance(activity!!).api.resetPassword(email)
             call.enqueue(object : Callback<MessageResponse> {
                 override fun onFailure(call: Call<MessageResponse>, t: Throwable) {
                     loadingScreen!!.visibility = View.GONE
