@@ -143,7 +143,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 position: Int, id: Long
             ) {
                 if (position != current) {
-                    localeHelper.setLocale(baseContext,LocaleHelper.languages[position])
+                    lang = LocaleHelper.languages[position]
+                    localeHelper.setLocale(baseContext,lang)
                     restartActivity(baseContext)
                 }
             }
@@ -156,6 +157,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         SharedPrefManager.getInstance(this).logout()
         RetrofitClient.getInstance(this).api.logout()
         val intent = Intent(this,AuthorizationActivity::class.java)
+        intent.putExtra("lang",lang)
         startActivity(intent)
         finish()
     }

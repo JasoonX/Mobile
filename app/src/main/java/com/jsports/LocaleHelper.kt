@@ -9,6 +9,15 @@ class LocaleHelper {
 
     companion object {
         val languages = listOf("uk", "en")
+        val disciplineStringResources = mutableMapOf(
+            "SWIMMING" to R.string.swimming,
+            "CYCLING" to R.string.cycling,
+            "ROWING" to R.string.rowing,
+            "SKIING" to R.string.skiing,
+            "SKATING" to R.string.skating,
+            "BIATHLON" to R.string.biathlon,
+            "RUNNING" to R.string.running
+        )
     }
 
     fun getLanguage(context: Context): String? {
@@ -34,7 +43,7 @@ class LocaleHelper {
         SharedPrefManager.getInstance(context).saveLanguage(language)
     }
 
-    @SuppressWarnings("deprecation")
+    @Suppress("DEPRECATION")
     private fun updateResources(
         context: Context,
         language: String?

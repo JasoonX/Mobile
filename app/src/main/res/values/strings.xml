@@ -52,4 +52,18 @@
     <string name="jsports_profile">JSports - Profile</string>
     <string name="previous">Previous</string>
     <string name="next">Next</string>
+    <string name="swimming">Swimming</string>
+    <string name="cycling">Cycling</string>
+    <string name="rowing">Rowing</string>
+    <string name="skiing">Skiing</string>
+    <string name="skating">Skating</string>
+    <string name="biathlon">Biathlon</string>
+    <string name="running">Running</string>
+    <string name="number_of_people">Number of people:</string>
+    <string name="males">Males:</string>
+    <string name="females">Females:</string>
+    <string name="events_count">Events count:</string>
+    <string name="your_events_count">Your events count:</string>
+    <string name="your_events_percent">Your events percent:</string>
+    <string name="percent" translatable="false">%1$s%%</string>
 </resources>

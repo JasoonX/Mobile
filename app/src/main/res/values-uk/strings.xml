@@ -51,4 +51,17 @@
     <string name="jsports_profile">JSports - Профіль</string>
     <string name="next">Наступна</string>
     <string name="previous">Попередня</string>
+    <string name="running">Біг</string>
+    <string name="swimming">Плавання</string>
+    <string name="cycling">Велоспорт</string>
+    <string name="rowing">Гребля</string>
+    <string name="skiing">Катання на лижах</string>
+    <string name="skating">Катання на ковзанах</string>
+    <string name="biathlon">Біатлон</string>
+    <string name="events_count">Кількість подій:</string>
+    <string name="females">Жінок:</string>
+    <string name="males">Чоловіків:</string>
+    <string name="number_of_people">Кількість людей:</string>
+    <string name="your_events_count">Кількість ваших подій</string>
+    <string name="your_events_percent">Відсоток ваших подій:</string>
 </resources>
