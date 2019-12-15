@@ -16,6 +16,7 @@ import com.jsports.activities.MainActivity
 import com.jsports.api.RetrofitClient
 import com.jsports.api.models.requests.LoginRequest
 import com.jsports.api.models.responses.LoginResponse
+import com.jsports.helpers.getErrorMessageFromJSON
 import com.jsports.storage.SharedPrefManager
 import es.dmoral.toasty.Toasty
 import org.json.JSONObject
@@ -115,7 +116,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
                     } else {
                         Toasty.error(
                             activity!!,
-                            JSONObject(response.errorBody()!!.string()).getString("message"),
+                            getErrorMessageFromJSON(response.errorBody()!!.string()),
                             Toasty.LENGTH_LONG
                         ).show()
                     }

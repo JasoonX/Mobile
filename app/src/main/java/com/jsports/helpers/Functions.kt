@@ -5,9 +5,14 @@ import android.content.Intent
 import com.jsports.api.RetrofitClient
 import com.jsports.api.models.responses.BooleanResponse
 import com.jsports.storage.SharedPrefManager
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
+fun getErrorMessageFromJSON(json:String):String{
+    return JSONObject(json).getString("message")
+}
 
 fun isAuthenticated(context:Context, callback:RetrofitCallback<BooleanResponse>){
     val token = SharedPrefManager.getInstance(context).getToken()

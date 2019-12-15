@@ -64,6 +64,12 @@ class SharedPrefManager(private val mCtx: Context) {
         return token != null
     }
 
+    fun logout(){
+        val sharedPreferences:SharedPreferences = mCtx.getSharedPreferences(sharedPrefName,
+            Context.MODE_PRIVATE)
+        sharedPreferences.edit().remove(tokenKey).apply()
+    }
+
     fun clear(){
         val sharedPreferences:SharedPreferences = mCtx.getSharedPreferences(sharedPrefName,
             Context.MODE_PRIVATE)

@@ -47,4 +47,8 @@
     <string name="open">Відкрити</string>
     <string name="close">Закрити</string>
     <string name="logout">Вийти</string>
+    <string name="home">Головна</string>
+    <string name="jsports_profile">JSports - Профіль</string>
+    <string name="next">Наступна</string>
+    <string name="previous">Попередня</string>
 </resources>

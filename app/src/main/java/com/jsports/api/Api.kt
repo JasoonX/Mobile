@@ -5,10 +5,12 @@ import com.jsports.api.models.requests.RegisterRequest
 import com.jsports.api.models.responses.BooleanResponse
 import com.jsports.api.models.responses.LoginResponse
 import com.jsports.api.models.responses.MessageResponse
+import com.jsports.api.models.responses.SportStatisticsResponse
 import retrofit2.Call
 import retrofit2.http.*
 
 const val usersBase = "/users"
+const val sportsBase = "/sports/stats"
 
 interface Api {
     @GET("$usersBase/tokenValid")
@@ -34,4 +36,7 @@ interface Api {
 
     @POST("$usersBase/logout")
     fun logout(): Call<MessageResponse>
+
+    @GET("$sportsBase/all")
+    fun getSportStatistics(): Call<List<SportStatisticsResponse>>
 }
