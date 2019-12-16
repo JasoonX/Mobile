@@ -23,12 +23,12 @@ import retrofit2.Response
 
 class HomeFragment : Fragment(), View.OnClickListener {
 
-    private var sportStatsPager: ViewPager? = null
-    private var pagerAdapter: PagerAdapter? = null
-    private var loadingScreen: FrameLayout? = null
+    private lateinit var sportStatsPager: ViewPager
+    private lateinit var pagerAdapter: PagerAdapter
+    private lateinit var loadingScreen: FrameLayout
     private var sportStats: List<SportStatisticsResponse>? = null
-    private var previous: ImageView? = null
-    private var next: ImageView? = null
+    private lateinit var previous: ImageView
+    private lateinit var next: ImageView
     private var currentPage = 0
 
     override fun onCreateView(
@@ -38,10 +38,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         activity!!.title = getString(R.string.jsports_home)
         loadingScreen = activity!!.findViewById(R.id.ls_main)
-        loadingScreen!!.visibility = View.VISIBLE
+        loadingScreen.visibility = View.VISIBLE
         sportStatsPager = view.findViewById(R.id.pager_sport_stats)
 
-        sportStatsPager!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        sportStatsPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
 
             }
@@ -60,11 +60,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
         })
 
         previous = view.findViewById(R.id.iv_previous)
-        previous!!.setOnClickListener(this)
-        previous!!.visibility = View.GONE
+        previous.setOnClickListener(this)
+        previous.visibility = View.GONE
 
         next = view.findViewById(R.id.iv_next)
-        next!!.setOnClickListener(this)
+        next.setOnClickListener(this)
 
         getSportStatistics()
         return view
@@ -73,14 +73,14 @@ class HomeFragment : Fragment(), View.OnClickListener {
     private fun onPageChanged(page: Int) {
         currentPage = page
         if (page == 0) {
-            previous!!.visibility = View.GONE
+            previous.visibility = View.GONE
         } else {
-            previous!!.visibility = View.VISIBLE
+            previous.visibility = View.VISIBLE
         }
         if (page == sportStats!!.lastIndex) {
-            next!!.visibility = View.GONE
+            next.visibility = View.GONE
         } else {
-            next!!.visibility = View.VISIBLE
+            next.visibility = View.VISIBLE
         }
     }
 
@@ -88,7 +88,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         val call = RetrofitClient.getInstance(activity!!).api.getSportStatistics()
         call.enqueue(object : Callback<List<SportStatisticsResponse>> {
             override fun onFailure(call: Call<List<SportStatisticsResponse>>, t: Throwable) {
-                loadingScreen!!.visibility = View.GONE
+                loadingScreen.visibility = View.GONE
                 Toasty.error(
                     activity!!,
                     t.message!!,
@@ -110,7 +110,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         Toasty.LENGTH_LONG
                     ).show()
                 }
-                loadingScreen!!.visibility = View.GONE
+                loadingScreen.visibility = View.GONE
             }
 
         })
@@ -118,7 +118,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     private fun initPager() {
         pagerAdapter = SportStatsPagerAdapter(activity!!.supportFragmentManager, sportStats!!)
-        sportStatsPager!!.adapter = pagerAdapter
+        sportStatsPager.adapter = pagerAdapter
     }
 
     override fun onClick(v: View?) {
@@ -126,13 +126,13 @@ class HomeFragment : Fragment(), View.OnClickListener {
             R.id.iv_previous -> {
                 currentPage -= 1
                 onPageChanged(currentPage)
-                sportStatsPager!!.setCurrentItem(currentPage, true)
+                sportStatsPager.setCurrentItem(currentPage, true)
             }
 
             R.id.iv_next -> {
                 currentPage += 1
                 onPageChanged(currentPage)
-                sportStatsPager!!.setCurrentItem(currentPage, true)
+                sportStatsPager.setCurrentItem(currentPage, true)
             }
         }
     }

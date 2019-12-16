@@ -23,27 +23,27 @@ import retrofit2.Response
 
 class ProfileFragment : Fragment() {
 
-    private var user: User? = null
+    private lateinit var user: User
 
-    private var loadingScreen: FrameLayout? = null
+    private lateinit var loadingScreen: FrameLayout
 
-    private var tvUsernameLabel: TextView? = null
-    private var tvGenderLabel: TextView? = null
-    private var tvEmailLabel: TextView? = null
-    private var tvHeightLabel: TextView? = null
-    private var tvWeightLabel: TextView? = null
-    private var tvDateLabel: TextView? = null
-    private var tvCountryLabel: TextView? = null
-    private var tvSportsLabel: TextView? = null
+    private lateinit var tvUsernameLabel: TextView
+    private lateinit var tvGenderLabel: TextView
+    private lateinit var tvEmailLabel: TextView
+    private lateinit var tvHeightLabel: TextView
+    private lateinit var tvWeightLabel: TextView
+    private lateinit var tvDateLabel: TextView
+    private lateinit var tvCountryLabel: TextView
+    private lateinit var tvSportsLabel: TextView
 
-    private var tvUsername: TextView? = null
-    private var tvGender: TextView? = null
-    private var tvEmail: TextView? = null
-    private var tvHeight: TextView? = null
-    private var tvWeight: TextView? = null
-    private var tvDate: TextView? = null
-    private var tvCountry: TextView? = null
-    private var tvSports: TextView? = null
+    private lateinit var tvUsername: TextView
+    private lateinit var tvGender: TextView
+    private lateinit var tvEmail: TextView
+    private lateinit var tvHeight: TextView
+    private lateinit var tvWeight: TextView
+    private lateinit var tvDate: TextView
+    private lateinit var tvCountry: TextView
+    private lateinit var tvSports: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +53,7 @@ class ProfileFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
         loadingScreen = activity!!.findViewById(R.id.ls_main)
-        loadingScreen!!.visibility = View.VISIBLE
+        loadingScreen.visibility = View.VISIBLE
 
         tvUsernameLabel = view.findViewById(R.id.tv_username_label)
         tvGenderLabel = view.findViewById(R.id.tv_gender_label)
@@ -83,7 +83,7 @@ class ProfileFragment : Fragment() {
 
         call.enqueue(object : Callback<User> {
             override fun onFailure(call: Call<User>, t: Throwable) {
-                loadingScreen!!.visibility = View.GONE
+                loadingScreen.visibility = View.GONE
                 Toasty.error(
                     activity!!,
                     t.message!!,
@@ -93,7 +93,7 @@ class ProfileFragment : Fragment() {
 
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 if (response.body() != null) {
-                    user = response.body()
+                    user = response.body()!!
                     setProfileData()
                 } else {
                     Toasty.error(
@@ -102,57 +102,57 @@ class ProfileFragment : Fragment() {
                         Toasty.LENGTH_LONG
                     ).show()
                 }
-                loadingScreen!!.visibility = View.GONE
+                loadingScreen.visibility = View.GONE
             }
         })
     }
 
     @SuppressLint("SetTextI18n")
     private fun setProfileData() {
-        tvUsernameLabel!!.text = "${getString(R.string.username)}:"
-        tvGenderLabel!!.text = "${getString(R.string.gender)}:"
-        tvEmailLabel!!.text = "${getString(R.string.email)}:"
-        tvHeightLabel!!.text = "${getString(R.string.height)}:"
-        tvWeightLabel!!.text = "${getString(R.string.weight)}:"
-        tvDateLabel!!.text = "${getString(R.string.date_of_birth)}:"
-        tvCountryLabel!!.text = "${getString(R.string.country)}:"
-        tvSportsLabel!!.text = "${getString(R.string.sports)}:"
+        tvUsernameLabel.text = "${getString(R.string.username)}:"
+        tvGenderLabel.text = "${getString(R.string.gender)}:"
+        tvEmailLabel.text = "${getString(R.string.email)}:"
+        tvHeightLabel.text = "${getString(R.string.height)}:"
+        tvWeightLabel.text = "${getString(R.string.weight)}:"
+        tvDateLabel.text = "${getString(R.string.date_of_birth)}:"
+        tvCountryLabel.text = "${getString(R.string.country)}:"
+        tvSportsLabel.text = "${getString(R.string.sports)}:"
 
-        tvUsername!!.text = user!!.username
-        tvGender!!.text =
-            if (user!!.gender == "MALE")
+        tvUsername.text = user.username
+        tvGender.text =
+            if (user.gender == "MALE")
                 getString(R.string.male)
             else
                 getString(R.string.female)
-        tvEmail!!.text = user!!.email
-        val height = user!!.height
+        tvEmail.text = user.email
+        val height = user.height
         val heightString = if (height == null) {
             getString(R.string.not_set)
         } else {
             "$height${getString(R.string.cm)}"
         }
-        tvHeight!!.text = heightString
-        val weight = user!!.weight
+        tvHeight.text = heightString
+        val weight = user.weight
         val weightString = if (weight == null) {
             getString(R.string.not_set)
         } else {
             "$weight${getString(R.string.kg)}"
         }
-        tvWeight!!.text = weightString
+        tvWeight.text = weightString
 
-        tvDate!!.text = if (user!!.born == null)
+        tvDate.text = if (user.born == null)
             getString(R.string.not_set)
         else
-            user!!.born
+            user.born
 
 
-        tvCountry!!.text = if (user!!.country == null)
+        tvCountry.text = if (user.country == null)
             getString(R.string.not_set)
         else
-            user!!.country
+            user.country
 
         var sportsString = ""
-        val sports = user!!.sports
+        val sports = user.sports
         if (sports.isNotEmpty()) {
             for (sport in sports) {
                 sportsString += "${getString(LocaleHelper.disciplineStringResources[sport.sportsDiscipline]!!)}, "
@@ -161,6 +161,6 @@ class ProfileFragment : Fragment() {
             sportsString = getString(R.string.not_set)
         }
         sportsString = sportsString.substring(0,sportsString.length-2)
-        tvSports!!.text = sportsString
+        tvSports.text = sportsString
     }
 }

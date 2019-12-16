@@ -19,11 +19,11 @@ class AuthorizationActivity : AppCompatActivity() {
 
     private var fTrans = supportFragmentManager.beginTransaction()
 
-    private var loginFragment: LoginFragment? = null
+    private lateinit var loginFragment: LoginFragment
 
     private var lang:String? = null
 
-    private var localeHelper:LocaleHelper = LocaleHelper()
+    private val localeHelper:LocaleHelper = LocaleHelper()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +32,7 @@ class AuthorizationActivity : AppCompatActivity() {
         lang = intent.getStringExtra("lang")
 
         loginFragment = LoginFragment()
-        fTrans.add(R.id.fl_auth, loginFragment!!)
+        fTrans.add(R.id.fl_auth, loginFragment)
         fTrans.commit()
         findViewById<FrameLayout>(R.id.auth_loading_screen).visibility = View.GONE
     }

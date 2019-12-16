@@ -71,4 +71,14 @@
     <string name="cm">cm</string>
     <string name="kg">kg</string>
     <string name="events">Events</string>
+    <string name="jsports_events">JSports - Events</string>
+    <string name="date">Date:</string>
+    <string name="time">Time:</string>
+    <string name="result">Result:</string>
+    <string name="distance">Distance:</string>
+    <string name="comment">Comment:</string>
+    <string name="km">km</string>
+    <string name="m">m</string>
+    <string name="min">min</string>
+    <string name="s">s</string>
 </resources>

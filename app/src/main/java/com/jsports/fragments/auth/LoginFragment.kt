@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.*
-import android.widget.AdapterView.OnItemSelectedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.jsports.R
@@ -19,7 +18,6 @@ import com.jsports.api.models.responses.LoginResponse
 import com.jsports.helpers.getErrorMessageFromJSON
 import com.jsports.storage.SharedPrefManager
 import es.dmoral.toasty.Toasty
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,14 +32,14 @@ class LoginFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    private var tvRegister: TextView? = null
-    private var fTrans: FragmentTransaction? = null
+    private lateinit var tvRegister: TextView
+    private lateinit var fTrans: FragmentTransaction
     private var registerFragment: RegisterFragment? = null
-    private var etUsername: EditText? = null
-    private var etPassword: EditText? = null
-    private var btLogin: Button? = null
-    private var tvForgotPass: TextView? = null
-    private var loadingScreen: FrameLayout? = null
+    private lateinit var etUsername: EditText
+    private lateinit var etPassword: EditText
+    private lateinit var btLogin: Button
+    private lateinit var tvForgotPass: TextView
+    private lateinit var loadingScreen: FrameLayout
     private var forgotPasswordFragment: ForgotPasswordFragment? = null
 
     override fun onCreateView(
@@ -56,12 +54,12 @@ class LoginFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         tvRegister = view.findViewById(R.id.tv_register)
-        tvRegister!!.setOnClickListener(this)
+        tvRegister.setOnClickListener(this)
 
         etUsername = view.findViewById(R.id.et_login_username)
         etPassword = view.findViewById(R.id.et_login_password)
 
-        etPassword!!.setOnEditorActionListener { _, actionId, _ ->
+        etPassword.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 login()
             }
@@ -71,10 +69,10 @@ class LoginFragment : Fragment(), View.OnClickListener {
         }
 
         btLogin = view.findViewById(R.id.bt_login)
-        btLogin!!.setOnClickListener(this)
+        btLogin.setOnClickListener(this)
 
         tvForgotPass = view.findViewById(R.id.tv_forgot_pass)
-        tvForgotPass!!.setOnClickListener(this)
+        tvForgotPass.setOnClickListener(this)
 
         loadingScreen = activity!!.findViewById(R.id.auth_loading_screen)
 
@@ -83,20 +81,20 @@ class LoginFragment : Fragment(), View.OnClickListener {
     }
 
     private fun swapFragmentTo(fragment: Fragment?) {
-        fTrans!!.replace(R.id.fl_auth, fragment!!).addToBackStack(null).commit()
+        fTrans.replace(R.id.fl_auth, fragment!!).addToBackStack(null).commit()
     }
 
     private fun login() {
-        val username = etUsername!!.text.toString()
-        val password = etPassword!!.text.toString()
+        val username = etUsername.text.toString()
+        val password = etPassword.text.toString()
 
         if (validateCredentials(username, password)) {
-            loadingScreen!!.visibility = View.VISIBLE
+            loadingScreen.visibility = View.VISIBLE
             val request = LoginRequest(username, password)
             val call = RetrofitClient.getInstance(activity!!).api.login(request)
             call.enqueue(object : Callback<LoginResponse> {
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                    loadingScreen!!.visibility = View.GONE
+                    loadingScreen.visibility = View.GONE
                     Toasty.error(
                         activity!!,
                         t.message!!,
@@ -124,7 +122,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
                             Toasty.LENGTH_LONG
                         ).show()
                     }
-                    loadingScreen!!.visibility = View.GONE
+                    loadingScreen.visibility = View.GONE
                 }
 
             })
@@ -137,26 +135,26 @@ class LoginFragment : Fragment(), View.OnClickListener {
 
         when {
             username.isEmpty() -> {
-                etUsername!!.error = getString(R.string.username_required)
+                etUsername.error = getString(R.string.username_required)
                 return false
             }
             username.length < 4 -> {
-                etUsername!!.error = getString(R.string.username_short)
+                etUsername.error = getString(R.string.username_short)
                 return false
             }
             username.length > 30 -> {
-                etUsername!!.error = getString(R.string.username_long)
+                etUsername.error = getString(R.string.username_long)
                 return false
             }
             !usernameRegex.matches(username) -> {
-                etUsername!!.error = getString(R.string.username_wrong)
+                etUsername.error = getString(R.string.username_wrong)
                 return false
             }
         }
 
         when {
             password.isEmpty() -> {
-                etPassword!!.error = getString(R.string.password_required)
+                etPassword.error = getString(R.string.password_required)
                 return false
             }
         }

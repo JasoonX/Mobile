@@ -7,9 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import com.jsports.R
 import com.jsports.api.RetrofitClient
+import com.jsports.api.adapters.EventsAdapter
 import com.jsports.api.models.Page
 import com.jsports.api.models.User
 import com.jsports.api.models.responses.EventResponse
@@ -21,19 +24,25 @@ import retrofit2.Response
 
 class EventsFragment : Fragment() {
 
-    private var eventsPage: Page<EventResponse>? = null
-    private var loadingScreen: FrameLayout? = null
+    private lateinit var eventsPage: Page<EventResponse>
+    private lateinit var loadingScreen: FrameLayout
     private var currentPage = 0
-    private var sportsDisciplines: List<String>? = null
+    private lateinit var sportsDisciplines: List<String>
+    private lateinit var rvEvents:RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        activity!!.title = getString(R.string.jsports_events)
+        val view = inflater.inflate(R.layout.fragment_events, container, false)
         loadingScreen = activity!!.findViewById(R.id.ls_main)
-        loadingScreen!!.visibility = View.VISIBLE
+        loadingScreen.visibility = View.VISIBLE
+        rvEvents = view.findViewById(R.id.rv_events)
+        rvEvents.layoutManager = LinearLayoutManager(activity!!)
+
         getUser()
-        return inflater.inflate(R.layout.fragment_events, container, false)
+        return view
     }
 
     private fun getUser() {
@@ -41,7 +50,7 @@ class EventsFragment : Fragment() {
 
         call.enqueue(object : Callback<User> {
             override fun onFailure(call: Call<User>, t: Throwable) {
-                loadingScreen!!.visibility = View.GONE
+                loadingScreen.visibility = View.GONE
                 Toasty.error(
                     activity!!,
                     t.message!!,
@@ -53,8 +62,8 @@ class EventsFragment : Fragment() {
                 if (response.body() != null) {
                     sportsDisciplines =
                         response.body()!!.sports.map { sport -> sport.sportsDiscipline }
-                    if(sportsDisciplines!!.isNotEmpty()){
-                        getEventsPage(currentPage,sportsDisciplines!![0])
+                    if(sportsDisciplines.isNotEmpty()){
+                        getEventsPage(currentPage,sportsDisciplines[0])
                     }
                 } else {
                     Toasty.error(
@@ -63,7 +72,7 @@ class EventsFragment : Fragment() {
                         Toasty.LENGTH_LONG
                     ).show()
                 }
-                loadingScreen!!.visibility = View.GONE
+                loadingScreen.visibility = View.GONE
             }
         })
     }
@@ -73,7 +82,7 @@ class EventsFragment : Fragment() {
 
         call.enqueue(object : Callback<Page<EventResponse>> {
             override fun onFailure(call: Call<Page<EventResponse>>, t: Throwable) {
-                loadingScreen!!.visibility = View.GONE
+                loadingScreen.visibility = View.GONE
                 Toasty.error(
                     activity!!,
                     t.message!!,
@@ -86,7 +95,7 @@ class EventsFragment : Fragment() {
                 response: Response<Page<EventResponse>>
             ) {
                 if (response.body() != null) {
-                    eventsPage = response.body()
+                    eventsPage = response.body()!!
                     initEventsPageUI()
                 } else {
                     Toasty.error(
@@ -95,12 +104,13 @@ class EventsFragment : Fragment() {
                         Toasty.LENGTH_LONG
                     ).show()
                 }
-                loadingScreen!!.visibility = View.GONE
+                loadingScreen.visibility = View.GONE
             }
         })
     }
 
     private fun initEventsPageUI() {
-
+        val eventsAdapter = EventsAdapter(activity!!,eventsPage.content)
+        rvEvents.adapter = eventsAdapter
     }
 }

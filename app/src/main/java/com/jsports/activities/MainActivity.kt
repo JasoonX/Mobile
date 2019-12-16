@@ -30,19 +30,19 @@ import okhttp3.ResponseBody
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
     View.OnClickListener {
 
-    private var drawerLayout: DrawerLayout? = null
-    private var actionBarDrawerToggle: ActionBarDrawerToggle? = null
-    private var navigationView: NavigationView? = null
-    private var tvLogout: TextView? = null
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+    private lateinit var navigationView: NavigationView
+    private lateinit var tvLogout: TextView
     private var lang: String? = null
-    private var localeHelper: LocaleHelper = LocaleHelper()
+    private val localeHelper: LocaleHelper = LocaleHelper()
     private var fTrans = supportFragmentManager.beginTransaction()
 
-    private var fragmentHome: Fragment? = null
+    private lateinit var fragmentHome: Fragment
     private var fragmentProfile: Fragment? = null
     private var fragmentEvents: Fragment? = null
 
-    private var currentScreen: Fragment? = null
+    private lateinit var currentScreen: Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         fragmentHome = HomeFragment()
         currentScreen = fragmentHome
 
-        fTrans.add(R.id.fl_main, fragmentHome!!).commit()
+        fTrans.add(R.id.fl_main, fragmentHome).commit()
 
         lang = intent.getStringExtra("lang")
 
@@ -76,20 +76,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         actionBarDrawerToggle =
             ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
 
-        drawerLayout!!.addDrawerListener(actionBarDrawerToggle!!)
-        actionBarDrawerToggle!!.syncState()
+        drawerLayout.addDrawerListener(actionBarDrawerToggle)
+        actionBarDrawerToggle.syncState()
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         navigationView = findViewById(R.id.nv)
-        navigationView!!.setNavigationItemSelectedListener(this)
+        navigationView.setNavigationItemSelectedListener(this)
 
         tvLogout = findViewById(R.id.tv_logout)
-        tvLogout!!.setOnClickListener(this)
+        tvLogout.setOnClickListener(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return if (actionBarDrawerToggle!!.onOptionsItemSelected(item)) true else super.onOptionsItemSelected(
+        return if (actionBarDrawerToggle.onOptionsItemSelected(item)) true else super.onOptionsItemSelected(
             item!!
         )
     }
@@ -101,17 +101,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     if (fragmentProfile == null) {
                         fragmentProfile = ProfileFragment()
                     }
-                    currentScreen = fragmentProfile
+                    currentScreen = fragmentProfile!!
                     replacePage(fragmentProfile!!)
                 }
-                drawerLayout!!.closeDrawers()
+                drawerLayout.closeDrawers()
             }
             R.id.mi_home -> {
                 if (currentScreen != fragmentHome) {
                     currentScreen = fragmentHome
-                    replacePage(fragmentHome!!)
+                    replacePage(fragmentHome)
                 }
-                drawerLayout!!.closeDrawers()
+                drawerLayout.closeDrawers()
             }
 
             R.id.mi_events -> {
@@ -119,10 +119,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     if(fragmentEvents == null){
                         fragmentEvents = EventsFragment()
                     }
-                    currentScreen = fragmentEvents
+                    currentScreen = fragmentEvents!!
                     replacePage(fragmentEvents!!)
                 }
-                drawerLayout!!.closeDrawers()
+                drawerLayout.closeDrawers()
             }
             else -> return true
         }

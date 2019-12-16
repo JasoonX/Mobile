@@ -24,9 +24,9 @@ import java.util.regex.Pattern
 
 class ForgotPasswordFragment : Fragment(), View.OnClickListener {
 
-    private var loadingScreen: FrameLayout? = null
-    private var etResetPassEmail: EditText? = null
-    private var buttonResetPassSubmit: Button? = null
+    private lateinit var loadingScreen: FrameLayout
+    private lateinit var etResetPassEmail: EditText
+    private lateinit var buttonResetPassSubmit: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +40,7 @@ class ForgotPasswordFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         etResetPassEmail = view.findViewById(R.id.et_reset_pass_email)
-        etResetPassEmail!!.setOnEditorActionListener { _, actionId, _ ->
+        etResetPassEmail.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 resetPassSubmit()
             }
@@ -50,7 +50,7 @@ class ForgotPasswordFragment : Fragment(), View.OnClickListener {
         }
 
         buttonResetPassSubmit = view.findViewById(R.id.bt_reset_pass_submit)
-        buttonResetPassSubmit!!.setOnClickListener(this)
+        buttonResetPassSubmit.setOnClickListener(this)
 
         loadingScreen = activity!!.findViewById(R.id.auth_loading_screen)
     }
@@ -62,14 +62,14 @@ class ForgotPasswordFragment : Fragment(), View.OnClickListener {
     }
 
     private fun resetPassSubmit() {
-        val email: String = etResetPassEmail!!.text.toString()
+        val email: String = etResetPassEmail.text.toString()
 
         if (validateEmail(email)) {
-            loadingScreen!!.visibility = View.VISIBLE
+            loadingScreen.visibility = View.VISIBLE
             val call = RetrofitClient.getInstance(activity!!).api.resetPassword(email)
             call.enqueue(object : Callback<MessageResponse> {
                 override fun onFailure(call: Call<MessageResponse>, t: Throwable) {
-                    loadingScreen!!.visibility = View.GONE
+                    loadingScreen.visibility = View.GONE
                     Toasty.error(
                         activity!!,
                         t.message!!,
@@ -92,7 +92,7 @@ class ForgotPasswordFragment : Fragment(), View.OnClickListener {
                             Toasty.LENGTH_LONG
                         ).show()
                     }
-                    loadingScreen!!.visibility = View.GONE
+                    loadingScreen.visibility = View.GONE
                 }
 
             })
@@ -101,10 +101,10 @@ class ForgotPasswordFragment : Fragment(), View.OnClickListener {
 
     private fun validateEmail(email: String): Boolean {
         if (email.isEmpty()) {
-            etResetPassEmail!!.error = getString(R.string.email_required)
+            etResetPassEmail.error = getString(R.string.email_required)
             return false
         } else if (!Pattern.matches(Patterns.EMAIL_ADDRESS.pattern(), email)) {
-            etResetPassEmail!!.error = getString(R.string.wrong_email)
+            etResetPassEmail.error = getString(R.string.wrong_email)
             return false
         }
         return true

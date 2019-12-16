@@ -25,21 +25,21 @@ import java.util.regex.Pattern
 
 class RegisterFragment : Fragment(), View.OnClickListener {
 
-    private var tvLogin: TextView? = null
-    private var fTrans: FragmentTransaction? = null
+    private lateinit var tvLogin: TextView
+    private lateinit var fTrans: FragmentTransaction
     private var loginFragment: LoginFragment? = null
-    private var loadingScreen: FrameLayout? = null
-    private var etFullName: EditText? = null
-    private var rbMale: RadioButton? = null
-    private var etUsername: EditText? = null
-    private var etPassword: EditText? = null
-    private var etConfirmPassword: EditText? = null
-    private var etEmail: EditText? = null
-    private var etCountry: EditText? = null
-    private var etHeight: EditText? = null
-    private var etWeight: EditText? = null
-    private var etDateOfBirth: EditText? = null
-    private var btSubmit: Button? = null
+    private lateinit var loadingScreen: FrameLayout
+    private lateinit var etFullName: EditText
+    private lateinit var rbMale: RadioButton
+    private lateinit var etUsername: EditText
+    private lateinit var etPassword: EditText
+    private lateinit var etConfirmPassword: EditText
+    private lateinit var etEmail: EditText
+    private lateinit var etCountry: EditText
+    private lateinit var etHeight: EditText
+    private lateinit var etWeight: EditText
+    private lateinit var etDateOfBirth: EditText
+    private lateinit var btSubmit: Button
 
 
     override fun onCreateView(
@@ -56,7 +56,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         tvLogin = view.findViewById(R.id.tv_login)
-        tvLogin!!.setOnClickListener(this)
+        tvLogin.setOnClickListener(this)
 
         etFullName = view.findViewById(R.id.et_register_fullname)
         rbMale = view.findViewById(R.id.rb_gender_male)
@@ -70,7 +70,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
         etDateOfBirth = view.findViewById(R.id.et_register_date)
 
         btSubmit = view.findViewById(R.id.bt_register)
-        btSubmit!!.setOnClickListener(this)
+        btSubmit.setOnClickListener(this)
 
         fTrans = activity!!.supportFragmentManager.beginTransaction()
         loginFragment = LoginFragment()
@@ -78,7 +78,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v!!.id) {
-            R.id.tv_login -> fTrans!!.replace(
+            R.id.tv_login -> fTrans.replace(
                 R.id.fl_auth,
                 loginFragment!!
             ).addToBackStack(null).commit()
@@ -88,22 +88,22 @@ class RegisterFragment : Fragment(), View.OnClickListener {
     }
 
     private fun register() {
-        val fullName: String = etFullName!!.text.toString()
-        val gender: String = if (rbMale!!.isChecked) "MALE" else "FEMALE"
-        val username: String = etUsername!!.text.toString()
-        val password: String = etPassword!!.text.toString()
-        val email: String = etEmail!!.text.toString()
+        val fullName: String = etFullName.text.toString()
+        val gender: String = if (rbMale.isChecked) "MALE" else "FEMALE"
+        val username: String = etUsername.text.toString()
+        val password: String = etPassword.text.toString()
+        val email: String = etEmail.text.toString()
         val country: String? =
-            if (etCountry!!.text.toString().isEmpty()) null else etCountry!!.text.toString()
+            if (etCountry.text.toString().isEmpty()) null else etCountry.text.toString()
 
         val height: Float? =
-            if (etHeight!!.text.toString().isEmpty()) null else etHeight!!.text.toString().toFloat()
+            if (etHeight.text.toString().isEmpty()) null else etHeight.text.toString().toFloat()
 
         val weight: Float? =
-            if (etWeight!!.text.toString().isEmpty()) null else etWeight!!.text.toString().toFloat()
+            if (etWeight.text.toString().isEmpty()) null else etWeight.text.toString().toFloat()
 
         val date: String? =
-            if (etDateOfBirth!!.text.toString().isEmpty()) null else etDateOfBirth!!.text.toString()
+            if (etDateOfBirth.text.toString().isEmpty()) null else etDateOfBirth.text.toString()
 
         val registerRequest = RegisterRequest(
             fullName,
@@ -118,12 +118,12 @@ class RegisterFragment : Fragment(), View.OnClickListener {
         )
 
         if (validateRegisterRequest(registerRequest)) {
-            loadingScreen!!.visibility = View.VISIBLE
+            loadingScreen.visibility = View.VISIBLE
             val call = RetrofitClient.getInstance(activity!!).api.register(registerRequest)
 
             call.enqueue(object : Callback<MessageResponse> {
                 override fun onFailure(call: Call<MessageResponse>, t: Throwable) {
-                    loadingScreen!!.visibility = View.GONE
+                    loadingScreen.visibility = View.GONE
                     Toasty.error(
                         activity!!,
                         t.message!!,
@@ -146,7 +146,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
                             Toasty.LENGTH_LONG
                         ).show()
                     }
-                    loadingScreen!!.visibility = View.GONE
+                    loadingScreen.visibility = View.GONE
                 }
 
             })
@@ -172,99 +172,99 @@ class RegisterFragment : Fragment(), View.OnClickListener {
 
         when {
             registerRequest.fullname.isEmpty() -> {
-                etFullName!!.error = getString(R.string.ful_name_required)
+                etFullName.error = getString(R.string.ful_name_required)
                 return false
             }
 
             registerRequest.fullname.length > 50 -> {
-                etFullName!!.error = getString(R.string.full_name_long)
+                etFullName.error = getString(R.string.full_name_long)
                 return false
             }
 
             registerRequest.fullname.length < 5 -> {
-                etFullName!!.error = getString(R.string.full_name_short)
+                etFullName.error = getString(R.string.full_name_short)
                 return false
             }
 
             registerRequest.username.isEmpty() -> {
-                etUsername!!.error = getString(R.string.username_required)
+                etUsername.error = getString(R.string.username_required)
                 return false
             }
             registerRequest.username.length < 4 -> {
-                etUsername!!.error = getString(R.string.username_short)
+                etUsername.error = getString(R.string.username_short)
                 return false
             }
             registerRequest.username.length > 30 -> {
-                etUsername!!.error = getString(R.string.username_long)
+                etUsername.error = getString(R.string.username_long)
                 return false
             }
             !usernameRegex.matches(registerRequest.username) -> {
-                etUsername!!.error = getString(R.string.username_wrong)
+                etUsername.error = getString(R.string.username_wrong)
                 return false
             }
 
             registerRequest.password.isEmpty() -> {
-                etPassword!!.error = getString(R.string.password_required)
+                etPassword.error = getString(R.string.password_required)
                 return false
             }
 
             registerRequest.password.length < 10 -> {
-                etPassword!!.error = getString(R.string.password_short)
+                etPassword.error = getString(R.string.password_short)
                 return false
             }
 
-            registerRequest.password != etConfirmPassword!!.text.toString() -> {
-                etConfirmPassword!!.error = getString(R.string.passwords_not_match)
+            registerRequest.password != etConfirmPassword.text.toString() -> {
+                etConfirmPassword.error = getString(R.string.passwords_not_match)
                 return false
             }
 
             registerRequest.email.isEmpty() -> {
-                etEmail!!.error = getString(R.string.email_required)
+                etEmail.error = getString(R.string.email_required)
                 return false
             }
 
             !Pattern.matches(Patterns.EMAIL_ADDRESS.pattern(), registerRequest.email) -> {
-                etEmail!!.error = getString(R.string.wrong_email)
+                etEmail.error = getString(R.string.wrong_email)
                 return false
             }
 
             registerRequest.country != null && !countries.contains(registerRequest.country) -> {
-                etCountry!!.error = getString(R.string.country_not_found)
+                etCountry.error = getString(R.string.country_not_found)
                 return false
             }
 
             registerRequest.height != null && registerRequest.height > 250 -> {
-                etHeight!!.error = getString(R.string.height_large)
+                etHeight.error = getString(R.string.height_large)
                 return false
             }
 
             registerRequest.height != null && registerRequest.height < 56 -> {
-                etHeight!!.error = getString(R.string.height_small)
+                etHeight.error = getString(R.string.height_small)
                 return false
             }
 
             registerRequest.weight != null && registerRequest.weight > 200 -> {
-                etWeight!!.error = getString(R.string.weight_large)
+                etWeight.error = getString(R.string.weight_large)
                 return false
             }
 
             registerRequest.weight != null && registerRequest.weight < 20 -> {
-                etWeight!!.error = getString(R.string.weight_small)
+                etWeight.error = getString(R.string.weight_small)
                 return false
             }
 
             registerRequest.born != null && !dateRegex.matches(registerRequest.born) -> {
-                etDateOfBirth!!.error = getString(R.string.date_format_wrong)
+                etDateOfBirth.error = getString(R.string.date_format_wrong)
                 return false
             }
 
             registerRequest.born != null && current.minusYears(4).isBefore(given) -> {
-                etDateOfBirth!!.error = getString(R.string.age_small)
+                etDateOfBirth.error = getString(R.string.age_small)
                 return false
             }
 
             registerRequest.born != null && current.minusYears(100).isAfter(given) -> {
-                etDateOfBirth!!.error = getString(R.string.age_big)
+                etDateOfBirth.error = getString(R.string.age_big)
                 return false
             }
         }
