@@ -47,7 +47,9 @@ interface Api {
     @GET("$eventsBase/page/{page}")
     fun getEvents(
         @Path("page") page: Int,
-        @Query("sportsDiscipline") sportsDiscipline: String
+        @Query("sportsDiscipline") sportsDiscipline: String,
+        @Query("orderBy") orderBy:String = "dateTime",
+        @Query("direction") direction:String = "DESC"
     ): Call<Page<EventResponse>>
 
     @DELETE("$eventsBase/")

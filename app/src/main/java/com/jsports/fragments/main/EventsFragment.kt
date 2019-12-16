@@ -1,16 +1,16 @@
 package com.jsports.fragments.main
 
 
+import android.content.DialogInterface.OnShowListener
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jsports.LocaleHelper
-
 import com.jsports.R
 import com.jsports.api.RetrofitClient
 import com.jsports.api.adapters.EventsAdapter
@@ -19,15 +19,14 @@ import com.jsports.api.models.User
 import com.jsports.api.models.requests.EventRequest
 import com.jsports.api.models.responses.EventResponse
 import com.jsports.api.models.responses.MessageResponse
+import com.jsports.dialogs.AddEventDialog
 import com.jsports.dialogs.SimpleDialog
-import com.jsports.helpers.RetrofitCallback
 import com.jsports.helpers.getErrorMessageFromJSON
 import es.dmoral.toasty.Toasty
-import okhttp3.Request
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class EventsFragment : Fragment(), View.OnClickListener {
 
@@ -249,10 +248,12 @@ class EventsFragment : Fragment(), View.OnClickListener {
     }
 
     private fun addEventPressed(){
-
+        val dialog = AddEventDialog(currentSportsDiscipline,::addEvent)
+        dialog.show(activity!!.supportFragmentManager,null)
     }
 
     private fun addEvent(request: EventRequest){
+        loadingScreen.visibility = View.VISIBLE
         val call = RetrofitClient.getInstance(activity!!).api.addEvent(request)
 
         call.enqueue(object : Callback<MessageResponse>{
@@ -303,13 +304,9 @@ class EventsFragment : Fragment(), View.OnClickListener {
                 }
             }
 
-            R.id.tv_add_event -> {
+            R.id.tv_add_event -> addEventPressed()
 
-            }
-
-            R.id.iv_add_event -> {
-
-            }
+            R.id.iv_add_event -> addEventPressed()
         }
     }
 }

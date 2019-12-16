@@ -91,4 +91,9 @@
     <string name="delete_event_message">Are you sure you want to delete this event?</string>
     <string name="logout_message">Are you sure you want to logout?</string>
     <string name="add_event">Add event</string>
+    <string name="distance_">Distance</string>
+    <string name="time_">Time</string>
+    <string name="comment_">Comment</string>
+    <string name="distance_required">Distance required</string>
+    <string name="time_required">Time required</string>
 </resources>

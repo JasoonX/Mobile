@@ -89,4 +89,9 @@
     <string name="ok">Ок</string>
     <string name="logout_message">Ви впевнені, що хочете вийти?</string>
     <string name="add_event">Додати подію</string>
+    <string name="time_">Час</string>
+    <string name="distance_">Дистанція</string>
+    <string name="comment_">Коментар</string>
+    <string name="distance_required">Дистанція необхідна</string>
+    <string name="time_required">Час необхіден</string>
 </resources>

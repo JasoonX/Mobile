@@ -21,15 +21,13 @@ class SimpleDialog(
         builder.setMessage(message)
             .setPositiveButton(
                 getString(R.string.ok)
-            ) { dialog, _ ->
+            ) { _, _ ->
                 positive?.let { it() }
-                dialog.dismiss()
             }
             .setNegativeButton(
                 R.string.cancel
-            ) { dialog, _ ->
+            ) { _, _ ->
                 negative?.let { it() }
-                dialog.dismiss()
             }
         return builder.create()
     }
