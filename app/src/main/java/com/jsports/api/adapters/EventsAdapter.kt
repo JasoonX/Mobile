@@ -58,11 +58,15 @@ class EventsAdapter(private val context: Context, private val events: List<Event
                 val seconds = (resultTime - (minutes * 60)).toInt()
                 "$minutes${context.getString(R.string.min)} $seconds${context.getString(R.string.s)}"
             }
-        }else{
+        } else {
             "${resultTime}${context.getString(R.string.s)}"
         }
 
-        val comment = event.comment ?: context.getString(R.string.no_comment)
+        val comment =
+            if (event.comment == null || event.comment.isEmpty())
+                context.getString(R.string.no_comment)
+            else
+                event.comment
 
         holder.tvDate.text = date
         holder.tvTime.text = time

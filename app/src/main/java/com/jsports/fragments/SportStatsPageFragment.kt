@@ -52,11 +52,7 @@ class SportStatsPageFragment(private val sportStatisticsResponse: SportStatistic
     companion object {
 
         fun newInstance(sportStatisticsResponse: SportStatisticsResponse): SportStatsPageFragment {
-            val pageFragment = SportStatsPageFragment(sportStatisticsResponse)
-            val arguments = Bundle()
-
-            pageFragment.arguments = arguments
-            return pageFragment
+            return SportStatsPageFragment(sportStatisticsResponse)
         }
     }
 }

@@ -82,4 +82,7 @@
     <string name="min">min</string>
     <string name="s">s</string>
     <string name="no_comment">No comment</string>
+    <string name="add">Add</string>
+    <string name="no_events_yet">No events yet.</string>
+    <string name="no_sport_disciplines">No sport disciplines</string>
 </resources>

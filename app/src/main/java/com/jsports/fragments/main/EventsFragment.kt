@@ -6,11 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.jsports.LocaleHelper
 
 import com.jsports.R
 import com.jsports.api.RetrofitClient
@@ -24,17 +23,21 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class EventsFragment : Fragment(),View.OnClickListener {
+class EventsFragment : Fragment(), View.OnClickListener {
 
     private lateinit var eventsPage: Page<EventResponse>
     private lateinit var loadingScreen: FrameLayout
     private var currentPage = 0
-    private lateinit var currentSportsDiscipline:String
+    private lateinit var currentSportsDiscipline: String
     private lateinit var sportsDisciplines: List<String>
-    private lateinit var rvEvents:RecyclerView
-    private lateinit var ivNextEventsPage:ImageView
-    private lateinit var ivPreviousEventsPage:ImageView
-    private lateinit var tvCurrentPage:TextView
+    private lateinit var rvEvents: RecyclerView
+    private lateinit var ivNextEventsPage: ImageView
+    private lateinit var ivPreviousEventsPage: ImageView
+    private lateinit var tvCurrentPage: TextView
+    private lateinit var llNoEvents: LinearLayout
+    private lateinit var tvNoEvents: TextView
+    private lateinit var tvAddEvent: TextView
+    private lateinit var spinnerDisciplines: Spinner
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,7 +57,15 @@ class EventsFragment : Fragment(),View.OnClickListener {
         ivPreviousEventsPage.setOnClickListener(this)
 
         tvCurrentPage = view.findViewById(R.id.tv_events_page)
-        tvCurrentPage.text = (currentPage+1).toString()
+        tvCurrentPage.text = (currentPage + 1).toString()
+
+        llNoEvents = view.findViewById(R.id.ll_no_events)
+        llNoEvents.visibility = View.GONE
+
+        tvNoEvents = view.findViewById(R.id.tv_no_events)
+
+        tvAddEvent = view.findViewById(R.id.tv_add_event)
+        tvAddEvent.setOnClickListener(this)
 
         getUser()
         return view
@@ -77,9 +88,13 @@ class EventsFragment : Fragment(),View.OnClickListener {
                 if (response.body() != null) {
                     sportsDisciplines =
                         response.body()!!.sports.map { sport -> sport.sportsDiscipline }
-                    if(sportsDisciplines.isNotEmpty()){
+                    if (sportsDisciplines.isNotEmpty()) {
                         currentSportsDiscipline = sportsDisciplines[0]
-                        getEventsPage(currentPage,currentSportsDiscipline)
+                        initSpinner()
+                        getEventsPage(currentPage, currentSportsDiscipline)
+                    } else {
+                        tvNoEvents.text = getString(R.string.no_sport_disciplines)
+                        llNoEvents.visibility = View.VISIBLE
                     }
                 } else {
                     Toasty.error(
@@ -113,14 +128,14 @@ class EventsFragment : Fragment(),View.OnClickListener {
             ) {
                 if (response.body() != null) {
                     eventsPage = response.body()!!
-                    if(eventsPage.first){
+                    if (eventsPage.first) {
                         ivPreviousEventsPage.visibility = View.INVISIBLE
-                    }else{
+                    } else {
                         ivPreviousEventsPage.visibility = View.VISIBLE
                     }
-                    if(eventsPage.last){
+                    if (eventsPage.last) {
                         ivNextEventsPage.visibility = View.INVISIBLE
-                    }else{
+                    } else {
                         ivNextEventsPage.visibility = View.VISIBLE
                     }
                     initEventsPageUI()
@@ -137,26 +152,69 @@ class EventsFragment : Fragment(),View.OnClickListener {
     }
 
     private fun initEventsPageUI() {
-        val eventsAdapter = EventsAdapter(activity!!,eventsPage.content)
-        rvEvents.adapter = eventsAdapter
+        if (eventsPage.numberOfElements == 0) {
+            tvNoEvents.text = getString(R.string.no_sport_disciplines)
+            llNoEvents.visibility = View.VISIBLE
+        } else {
+            val eventsAdapter = EventsAdapter(activity!!, eventsPage.content)
+            rvEvents.adapter = eventsAdapter
+        }
+    }
+
+    private fun initSpinner() {
+        val localizedSportDisciplines =
+            sportsDisciplines.map { discipline -> getString(LocaleHelper.disciplineStringResources[discipline]!!) }
+
+        val adapter: ArrayAdapter<String> =
+            ArrayAdapter(
+                activity!!,
+                R.layout.spinner_item_disciplines,
+                localizedSportDisciplines
+            )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        spinnerDisciplines = view!!.findViewById(R.id.spin_sport_disciplines)
+
+
+        spinnerDisciplines.adapter = adapter
+
+        spinnerDisciplines.setSelection(0)
+
+        spinnerDisciplines.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?, view: View,
+                position: Int, id: Long
+            ) {
+                if (currentSportsDiscipline != sportsDisciplines[position]) {
+                    currentSportsDiscipline = sportsDisciplines[position]
+                    getEventsPage(0, currentSportsDiscipline)
+                }
+            }
+
+            override fun onNothingSelected(arg0: AdapterView<*>?) {}
+        }
     }
 
     override fun onClick(v: View?) {
-        when(v!!.id){
+        when (v!!.id) {
             R.id.iv_next_events -> {
-                if(!eventsPage.last){
+                if (!eventsPage.last) {
                     currentPage += 1
-                    tvCurrentPage.text = (currentPage+1).toString()
-                    getEventsPage(currentPage,currentSportsDiscipline)
+                    tvCurrentPage.text = (currentPage + 1).toString()
+                    getEventsPage(currentPage, currentSportsDiscipline)
                 }
             }
 
             R.id.iv_previous_events -> {
-                if(!eventsPage.first){
+                if (!eventsPage.first) {
                     currentPage -= 1
-                    tvCurrentPage.text = (currentPage+1).toString()
-                    getEventsPage(currentPage,currentSportsDiscipline)
+                    tvCurrentPage.text = (currentPage + 1).toString()
+                    getEventsPage(currentPage, currentSportsDiscipline)
                 }
+            }
+
+            R.id.tv_add_event -> {
+
             }
         }
     }

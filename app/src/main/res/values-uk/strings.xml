@@ -80,4 +80,7 @@
     <string name="s">с</string>
     <string name="time">Час:</string>
     <string name="no_comment">Коментар відсутній</string>
+    <string name="add">Додати</string>
+    <string name="no_events_yet">Події відсутні.</string>
+    <string name="no_sport_disciplines">Не задано жодної спортивної дисципліни</string>
 </resources>
