@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -22,13 +24,17 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class EventsFragment : Fragment() {
+class EventsFragment : Fragment(),View.OnClickListener {
 
     private lateinit var eventsPage: Page<EventResponse>
     private lateinit var loadingScreen: FrameLayout
     private var currentPage = 0
+    private lateinit var currentSportsDiscipline:String
     private lateinit var sportsDisciplines: List<String>
     private lateinit var rvEvents:RecyclerView
+    private lateinit var ivNextEventsPage:ImageView
+    private lateinit var ivPreviousEventsPage:ImageView
+    private lateinit var tvCurrentPage:TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +46,15 @@ class EventsFragment : Fragment() {
         loadingScreen.visibility = View.VISIBLE
         rvEvents = view.findViewById(R.id.rv_events)
         rvEvents.layoutManager = LinearLayoutManager(activity!!)
+
+        ivNextEventsPage = view.findViewById(R.id.iv_next_events)
+        ivNextEventsPage.setOnClickListener(this)
+
+        ivPreviousEventsPage = view.findViewById(R.id.iv_previous_events)
+        ivPreviousEventsPage.setOnClickListener(this)
+
+        tvCurrentPage = view.findViewById(R.id.tv_events_page)
+        tvCurrentPage.text = (currentPage+1).toString()
 
         getUser()
         return view
@@ -63,7 +78,8 @@ class EventsFragment : Fragment() {
                     sportsDisciplines =
                         response.body()!!.sports.map { sport -> sport.sportsDiscipline }
                     if(sportsDisciplines.isNotEmpty()){
-                        getEventsPage(currentPage,sportsDisciplines[0])
+                        currentSportsDiscipline = sportsDisciplines[0]
+                        getEventsPage(currentPage,currentSportsDiscipline)
                     }
                 } else {
                     Toasty.error(
@@ -78,6 +94,7 @@ class EventsFragment : Fragment() {
     }
 
     private fun getEventsPage(page: Int, sportsDiscipline: String) {
+        loadingScreen.visibility = View.VISIBLE
         val call = RetrofitClient.getInstance(activity!!).api.getEvents(page, sportsDiscipline)
 
         call.enqueue(object : Callback<Page<EventResponse>> {
@@ -96,6 +113,16 @@ class EventsFragment : Fragment() {
             ) {
                 if (response.body() != null) {
                     eventsPage = response.body()!!
+                    if(eventsPage.first){
+                        ivPreviousEventsPage.visibility = View.INVISIBLE
+                    }else{
+                        ivPreviousEventsPage.visibility = View.VISIBLE
+                    }
+                    if(eventsPage.last){
+                        ivNextEventsPage.visibility = View.INVISIBLE
+                    }else{
+                        ivNextEventsPage.visibility = View.VISIBLE
+                    }
                     initEventsPageUI()
                 } else {
                     Toasty.error(
@@ -112,5 +139,25 @@ class EventsFragment : Fragment() {
     private fun initEventsPageUI() {
         val eventsAdapter = EventsAdapter(activity!!,eventsPage.content)
         rvEvents.adapter = eventsAdapter
+    }
+
+    override fun onClick(v: View?) {
+        when(v!!.id){
+            R.id.iv_next_events -> {
+                if(!eventsPage.last){
+                    currentPage += 1
+                    tvCurrentPage.text = (currentPage+1).toString()
+                    getEventsPage(currentPage,currentSportsDiscipline)
+                }
+            }
+
+            R.id.iv_previous_events -> {
+                if(!eventsPage.first){
+                    currentPage -= 1
+                    tvCurrentPage.text = (currentPage+1).toString()
+                    getEventsPage(currentPage,currentSportsDiscipline)
+                }
+            }
+        }
     }
 }

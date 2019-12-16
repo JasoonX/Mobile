@@ -81,4 +81,5 @@
     <string name="m">m</string>
     <string name="min">min</string>
     <string name="s">s</string>
+    <string name="no_comment">No comment</string>
 </resources>

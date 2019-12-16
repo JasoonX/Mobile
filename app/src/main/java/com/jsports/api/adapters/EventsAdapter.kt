@@ -62,10 +62,12 @@ class EventsAdapter(private val context: Context, private val events: List<Event
             "${resultTime}${context.getString(R.string.s)}"
         }
 
+        val comment = event.comment ?: context.getString(R.string.no_comment)
+
         holder.tvDate.text = date
         holder.tvTime.text = time
         holder.tvDistance.text = distanceString
         holder.tvResultTime.text = resultTimeString
-        holder.tvComment.text = event.comment
+        holder.tvComment.text = comment
     }
 }

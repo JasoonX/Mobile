@@ -70,13 +70,14 @@
     <string name="events">Події</string>
     <string name="kg">кг</string>
     <string name="jsports_events">JSports - Події</string>
-    <string name="comment">Коментар</string>
-    <string name="date">Дата</string>
-    <string name="distance">Дістанція</string>
+    <string name="comment">Коментар:</string>
+    <string name="date">Дата:</string>
+    <string name="distance">Дистанція:</string>
     <string name="km">км</string>
     <string name="m">м</string>
     <string name="min">хв</string>
     <string name="result">Результат:</string>
     <string name="s">с</string>
     <string name="time">Час:</string>
+    <string name="no_comment">Коментар відсутній</string>
 </resources>
