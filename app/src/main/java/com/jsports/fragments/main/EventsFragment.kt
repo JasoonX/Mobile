@@ -18,6 +18,7 @@ import com.jsports.api.models.Page
 import com.jsports.api.models.User
 import com.jsports.api.models.responses.EventResponse
 import com.jsports.api.models.responses.MessageResponse
+import com.jsports.dialogs.SimpleDialog
 import com.jsports.helpers.RetrofitCallback
 import com.jsports.helpers.getErrorMessageFromJSON
 import es.dmoral.toasty.Toasty
@@ -159,9 +160,16 @@ class EventsFragment : Fragment(), View.OnClickListener {
             tvNoEvents.text = getString(R.string.no_sport_disciplines)
             llNoEvents.visibility = View.VISIBLE
         } else {
-            val eventsAdapter = EventsAdapter(activity!!, eventsPage.content, ::deleteEvent)
+            val eventsAdapter = EventsAdapter(activity!!, eventsPage.content, ::deleteEventPressed)
             rvEvents.adapter = eventsAdapter
         }
+    }
+
+    private fun deleteEventPressed(id:Long){
+        val dialog = SimpleDialog(activity!!,getString(R.string.delete_event_message),{
+            deleteEvent(id)
+        })
+        dialog.show(activity!!.supportFragmentManager,null)
     }
 
     private fun deleteEvent(id: Long) {
@@ -184,6 +192,10 @@ class EventsFragment : Fragment(), View.OnClickListener {
             ) {
                 if (response.body() != null) {
                     Toasty.success(activity!!, response.body()!!.message, Toasty.LENGTH_LONG).show()
+                    if(currentPage != 0 && eventsPage.numberOfElements == 1){
+                        currentPage -= 1
+                    }
+                    getEventsPage(currentPage,currentSportsDiscipline)
                 } else {
                     Toasty.error(
                         activity!!,

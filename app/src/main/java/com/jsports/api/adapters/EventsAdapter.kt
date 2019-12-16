@@ -15,7 +15,7 @@ import com.jsports.helpers.RetrofitCallback
 
 class EventsAdapter(private val context: Context,
                     private val events: List<EventResponse>,
-                    private val deleteEvent:(id:Long)->Unit) :
+                    private val deleteEventPressed:(id:Long)->Unit) :
     RecyclerView.Adapter<EventsAdapter.EventsViewHolder>() {
 
     class EventsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -81,6 +81,6 @@ class EventsAdapter(private val context: Context,
         holder.tvResultTime.text = resultTimeString
         holder.tvComment.text = comment
 
-        holder.ivDeleteEvent.setOnClickListener { deleteEvent(event.id) }
+        holder.ivDeleteEvent.setOnClickListener { deleteEventPressed(event.id) }
     }
 }

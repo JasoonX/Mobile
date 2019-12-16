@@ -17,6 +17,7 @@ import com.jsports.LocaleHelper
 import com.jsports.R
 import com.jsports.api.RetrofitClient
 import com.jsports.api.models.responses.BooleanResponse
+import com.jsports.dialogs.SimpleDialog
 import com.jsports.fragments.main.EventsFragment
 import com.jsports.fragments.main.HomeFragment
 import com.jsports.fragments.main.ProfileFragment
@@ -131,7 +132,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onClick(v: View?) {
         when (v!!.id) {
-            R.id.tv_logout -> logout()
+            R.id.tv_logout -> logoutPressed()
         }
     }
 
@@ -167,6 +168,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             override fun onNothingSelected(arg0: AdapterView<*>?) {}
         }
+    }
+
+    private fun logoutPressed(){
+        val dialog = SimpleDialog(this,getString(R.string.logout_message),{
+            logout()
+        })
+
+        dialog.show(supportFragmentManager,null)
     }
 
     private fun logout() {

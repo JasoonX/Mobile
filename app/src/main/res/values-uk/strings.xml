@@ -84,4 +84,8 @@
     <string name="no_events_yet">Події відсутні.</string>
     <string name="no_sport_disciplines">Не задано жодної спортивної дисципліни</string>
     <string name="delete_event">Видалити подію</string>
+    <string name="cancel">Відміна</string>
+    <string name="delete_event_message">Ви впевнені, що хочете видалити цю подію?</string>
+    <string name="ok">Ок</string>
+    <string name="logout_message">Ви впевнені, що хочете вийти?</string>
 </resources>

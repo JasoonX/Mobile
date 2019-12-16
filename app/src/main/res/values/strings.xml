@@ -86,4 +86,8 @@
     <string name="no_events_yet">No events yet.</string>
     <string name="no_sport_disciplines">No sport disciplines</string>
     <string name="delete_event">Delete event</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete_event_message">Are you sure you want to delete this event?</string>
+    <string name="logout_message">Are you sure you want to logout?</string>
 </resources>
