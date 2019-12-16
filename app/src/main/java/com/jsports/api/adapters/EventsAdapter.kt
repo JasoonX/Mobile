@@ -4,12 +4,18 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jsports.R
+import com.jsports.api.RetrofitClient
 import com.jsports.api.models.responses.EventResponse
+import com.jsports.api.models.responses.MessageResponse
+import com.jsports.helpers.RetrofitCallback
 
-class EventsAdapter(private val context: Context, private val events: List<EventResponse>) :
+class EventsAdapter(private val context: Context,
+                    private val events: List<EventResponse>,
+                    private val deleteEvent:(id:Long)->Unit) :
     RecyclerView.Adapter<EventsAdapter.EventsViewHolder>() {
 
     class EventsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -18,6 +24,7 @@ class EventsAdapter(private val context: Context, private val events: List<Event
         val tvDistance: TextView = view.findViewById(R.id.tv_distance)
         val tvResultTime: TextView = view.findViewById(R.id.tv_result_time)
         val tvComment: TextView = view.findViewById(R.id.tv_comment)
+        val ivDeleteEvent: ImageView = view.findViewById(R.id.iv_delete_event)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventsViewHolder {
@@ -73,5 +80,7 @@ class EventsAdapter(private val context: Context, private val events: List<Event
         holder.tvDistance.text = distanceString
         holder.tvResultTime.text = resultTimeString
         holder.tvComment.text = comment
+
+        holder.ivDeleteEvent.setOnClickListener { deleteEvent(event.id) }
     }
 }

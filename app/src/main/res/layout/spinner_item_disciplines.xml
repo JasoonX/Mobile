@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="start"
+    android:padding="8dp"
     android:text="Text"
     android:textAlignment="center"
     android:textColor="@android:color/black"

@@ -48,4 +48,7 @@ interface Api {
         @Path("page") page: Int,
         @Query("sportsDiscipline") sportsDiscipline: String
     ): Call<Page<EventResponse>>
+
+    @DELETE("$eventsBase/")
+    fun deleteEvent(@Query("id") id:Long) : Call<MessageResponse>
 }

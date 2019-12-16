@@ -85,4 +85,5 @@
     <string name="add">Add</string>
     <string name="no_events_yet">No events yet.</string>
     <string name="no_sport_disciplines">No sport disciplines</string>
+    <string name="delete_event">Delete event</string>
 </resources>

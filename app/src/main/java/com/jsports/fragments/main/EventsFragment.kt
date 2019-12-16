@@ -17,8 +17,11 @@ import com.jsports.api.adapters.EventsAdapter
 import com.jsports.api.models.Page
 import com.jsports.api.models.User
 import com.jsports.api.models.responses.EventResponse
+import com.jsports.api.models.responses.MessageResponse
+import com.jsports.helpers.RetrofitCallback
 import com.jsports.helpers.getErrorMessageFromJSON
 import es.dmoral.toasty.Toasty
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -156,9 +159,41 @@ class EventsFragment : Fragment(), View.OnClickListener {
             tvNoEvents.text = getString(R.string.no_sport_disciplines)
             llNoEvents.visibility = View.VISIBLE
         } else {
-            val eventsAdapter = EventsAdapter(activity!!, eventsPage.content)
+            val eventsAdapter = EventsAdapter(activity!!, eventsPage.content, ::deleteEvent)
             rvEvents.adapter = eventsAdapter
         }
+    }
+
+    private fun deleteEvent(id: Long) {
+        loadingScreen.visibility = View.VISIBLE
+        val call = RetrofitClient.getInstance(activity!!).api.deleteEvent(id)
+
+        call.enqueue(object : Callback<MessageResponse> {
+            override fun onFailure(call: Call<MessageResponse>, t: Throwable) {
+                loadingScreen.visibility = View.GONE
+                Toasty.error(
+                    activity!!,
+                    t.message!!,
+                    Toasty.LENGTH_LONG
+                ).show()
+            }
+
+            override fun onResponse(
+                call: Call<MessageResponse>,
+                response: Response<MessageResponse>
+            ) {
+                if (response.body() != null) {
+                    Toasty.success(activity!!, response.body()!!.message, Toasty.LENGTH_LONG).show()
+                } else {
+                    Toasty.error(
+                        activity!!,
+                        getErrorMessageFromJSON(response.errorBody()!!.string()),
+                        Toasty.LENGTH_LONG
+                    ).show()
+                }
+                loadingScreen.visibility = View.GONE
+            }
+        })
     }
 
     private fun initSpinner() {
@@ -171,7 +206,7 @@ class EventsFragment : Fragment(), View.OnClickListener {
                 R.layout.spinner_item_disciplines,
                 localizedSportDisciplines
             )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        adapter.setDropDownViewResource(R.layout.spinner_item_disciplines)
 
         spinnerDisciplines = view!!.findViewById(R.id.spin_sport_disciplines)
 
