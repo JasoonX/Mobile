@@ -16,12 +16,14 @@ import com.jsports.api.RetrofitClient
 import com.jsports.api.adapters.EventsAdapter
 import com.jsports.api.models.Page
 import com.jsports.api.models.User
+import com.jsports.api.models.requests.EventRequest
 import com.jsports.api.models.responses.EventResponse
 import com.jsports.api.models.responses.MessageResponse
 import com.jsports.dialogs.SimpleDialog
 import com.jsports.helpers.RetrofitCallback
 import com.jsports.helpers.getErrorMessageFromJSON
 import es.dmoral.toasty.Toasty
+import okhttp3.Request
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -42,6 +44,7 @@ class EventsFragment : Fragment(), View.OnClickListener {
     private lateinit var tvNoEvents: TextView
     private lateinit var tvAddEvent: TextView
     private lateinit var spinnerDisciplines: Spinner
+    private lateinit var ivAddEvent:ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,6 +73,9 @@ class EventsFragment : Fragment(), View.OnClickListener {
 
         tvAddEvent = view.findViewById(R.id.tv_add_event)
         tvAddEvent.setOnClickListener(this)
+
+        ivAddEvent = view.findViewById(R.id.iv_add_event)
+        ivAddEvent.setOnClickListener(this)
 
         getUser()
         return view
@@ -242,6 +248,43 @@ class EventsFragment : Fragment(), View.OnClickListener {
         }
     }
 
+    private fun addEventPressed(){
+
+    }
+
+    private fun addEvent(request: EventRequest){
+        val call = RetrofitClient.getInstance(activity!!).api.addEvent(request)
+
+        call.enqueue(object : Callback<MessageResponse>{
+            override fun onFailure(call: Call<MessageResponse>, t: Throwable) {
+                loadingScreen.visibility = View.GONE
+                Toasty.error(
+                    activity!!,
+                    t.message!!,
+                    Toasty.LENGTH_LONG
+                ).show()
+            }
+
+            override fun onResponse(
+                call: Call<MessageResponse>,
+                response: Response<MessageResponse>
+            ) {
+                if (response.body() != null) {
+                    Toasty.success(activity!!, response.body()!!.message, Toasty.LENGTH_LONG).show()
+                    getEventsPage(currentPage,currentSportsDiscipline)
+                } else {
+                    Toasty.error(
+                        activity!!,
+                        getErrorMessageFromJSON(response.errorBody()!!.string()),
+                        Toasty.LENGTH_LONG
+                    ).show()
+                }
+                loadingScreen.visibility = View.GONE
+            }
+
+        })
+    }
+
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.iv_next_events -> {
@@ -261,6 +304,10 @@ class EventsFragment : Fragment(), View.OnClickListener {
             }
 
             R.id.tv_add_event -> {
+
+            }
+
+            R.id.iv_add_event -> {
 
             }
         }

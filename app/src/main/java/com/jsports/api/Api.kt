@@ -2,6 +2,7 @@ package com.jsports.api
 
 import com.jsports.api.models.Page
 import com.jsports.api.models.User
+import com.jsports.api.models.requests.EventRequest
 import com.jsports.api.models.requests.LoginRequest
 import com.jsports.api.models.requests.RegisterRequest
 import com.jsports.api.models.responses.*
@@ -51,4 +52,7 @@ interface Api {
 
     @DELETE("$eventsBase/")
     fun deleteEvent(@Query("id") id:Long) : Call<MessageResponse>
+
+    @POST("$eventsBase/")
+    fun addEvent(@Body request: EventRequest):Call<MessageResponse>
 }
