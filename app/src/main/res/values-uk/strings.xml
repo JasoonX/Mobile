@@ -94,4 +94,5 @@
     <string name="comment_">Коментар</string>
     <string name="distance_required">Дистанція необхідна</string>
     <string name="time_required">Час необхіден</string>
+    <string name="profile_settings">Редагування профілю</string>
 </resources>

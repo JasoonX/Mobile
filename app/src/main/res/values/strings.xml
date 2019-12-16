@@ -96,4 +96,5 @@
     <string name="comment_">Comment</string>
     <string name="distance_required">Distance required</string>
     <string name="time_required">Time required</string>
+    <string name="profile_settings">Profile Settings</string>
 </resources>

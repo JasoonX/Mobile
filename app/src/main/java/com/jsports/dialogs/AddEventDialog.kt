@@ -32,14 +32,14 @@ class AddEventDialog(
         etComment = view.findViewById(R.id.et_comment)
         builder.setView(view)
             .setPositiveButton(
-                R.string.add
-            ) { _, _ ->
-            }
+                R.string.add, null
+            )
             .setNegativeButton(
-                R.string.cancel
-            ) { _, _ -> }
+                R.string.cancel,
+                null
+            )
         val created = builder.create()
-        created.setOnShowListener {dialog ->
+        created.setOnShowListener { dialog ->
             val button: Button =
                 (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
             button.setOnClickListener {

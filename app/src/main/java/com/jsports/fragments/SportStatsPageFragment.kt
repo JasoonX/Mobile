@@ -44,7 +44,7 @@ class SportStatsPageFragment(private val sportStatisticsResponse: SportStatistic
         tvYourEventsPercent.text =
             String.format(
                 getString(R.string.percent),
-                percen.toString()
+                String.format("%.2f", percen)
             )
         return view
     }

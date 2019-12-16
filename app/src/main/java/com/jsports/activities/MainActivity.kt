@@ -2,6 +2,7 @@ package com.jsports.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
@@ -18,6 +19,7 @@ import com.jsports.R
 import com.jsports.api.RetrofitClient
 import com.jsports.api.models.responses.BooleanResponse
 import com.jsports.dialogs.SimpleDialog
+import com.jsports.fragments.main.EditProfileFragment
 import com.jsports.fragments.main.EventsFragment
 import com.jsports.fragments.main.HomeFragment
 import com.jsports.fragments.main.ProfileFragment
@@ -44,6 +46,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var fragmentEvents: Fragment? = null
 
     private lateinit var currentScreen: Fragment
+
+    private lateinit var miProfileSettings:MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,8 +94,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item!!.itemId){
+            R.id.mi_profile_settings ->{
+                replacePage(EditProfileFragment())
+            }
+        }
+
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) true else super.onOptionsItemSelected(
-            item!!
+            item
         )
     }
 
@@ -170,6 +180,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu,menu)
+        miProfileSettings = menu!!.findItem(R.id.mi_profile_settings)
+        miProfileSettings.isVisible = false
+        return true
+    }
+
     private fun logoutPressed(){
         val dialog = SimpleDialog(this,getString(R.string.logout_message),{
             logout()
@@ -188,6 +205,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun replacePage(fragment: Fragment) {
+        miProfileSettings.isVisible = fragment == fragmentProfile
         fTrans = supportFragmentManager.beginTransaction()
         fTrans.replace(R.id.fl_main, fragment).addToBackStack(null).commit()
     }
