@@ -66,4 +66,7 @@
     <string name="your_events_percent">Відсоток ваших подій:</string>
     <string name="sports">Спортивні дисципліни</string>
     <string name="not_set">Не встановлено</string>
+    <string name="cm">см</string>
+    <string name="events">Події</string>
+    <string name="kg">кг</string>
 </resources>

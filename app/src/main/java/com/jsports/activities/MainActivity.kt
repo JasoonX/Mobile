@@ -17,6 +17,7 @@ import com.jsports.LocaleHelper
 import com.jsports.R
 import com.jsports.api.RetrofitClient
 import com.jsports.api.models.responses.BooleanResponse
+import com.jsports.fragments.main.EventsFragment
 import com.jsports.fragments.main.HomeFragment
 import com.jsports.fragments.main.ProfileFragment
 import com.jsports.helpers.RetrofitCallback
@@ -33,14 +34,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var actionBarDrawerToggle: ActionBarDrawerToggle? = null
     private var navigationView: NavigationView? = null
     private var tvLogout: TextView? = null
-    private var lang:String? = null
+    private var lang: String? = null
     private var localeHelper: LocaleHelper = LocaleHelper()
     private var fTrans = supportFragmentManager.beginTransaction()
 
-    private var fragmentHome:Fragment? = null
-    private var fragmentProfile:Fragment? = null
+    private var fragmentHome: Fragment? = null
+    private var fragmentProfile: Fragment? = null
+    private var fragmentEvents: Fragment? = null
 
-    private var currentScreen:Fragment? = null
+    private var currentScreen: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,14 +66,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         fragmentHome = HomeFragment()
         currentScreen = fragmentHome
 
-        fTrans.add(R.id.fl_main,fragmentHome!!).commit()
+        fTrans.add(R.id.fl_main, fragmentHome!!).commit()
 
         lang = intent.getStringExtra("lang")
 
         initSpinner()
 
         drawerLayout = findViewById(R.id.activity_main)
-        actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
+        actionBarDrawerToggle =
+            ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
 
         drawerLayout!!.addDrawerListener(actionBarDrawerToggle!!)
         actionBarDrawerToggle!!.syncState()
@@ -86,14 +89,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return if (actionBarDrawerToggle!!.onOptionsItemSelected(item)) true else super.onOptionsItemSelected(item!!)
+        return if (actionBarDrawerToggle!!.onOptionsItemSelected(item)) true else super.onOptionsItemSelected(
+            item!!
+        )
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.mi_profile -> {
-                if(currentScreen != fragmentProfile){
-                    if(fragmentProfile == null){
+                if (currentScreen != fragmentProfile) {
+                    if (fragmentProfile == null) {
                         fragmentProfile = ProfileFragment()
                     }
                     currentScreen = fragmentProfile
@@ -102,9 +107,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 drawerLayout!!.closeDrawers()
             }
             R.id.mi_home -> {
-                if(currentScreen != fragmentHome){
+                if (currentScreen != fragmentHome) {
                     currentScreen = fragmentHome
                     replacePage(fragmentHome!!)
+                }
+                drawerLayout!!.closeDrawers()
+            }
+
+            R.id.mi_events -> {
+                if(currentScreen != fragmentEvents){
+                    if(fragmentEvents == null){
+                        fragmentEvents = EventsFragment()
+                    }
+                    currentScreen = fragmentEvents
+                    replacePage(fragmentEvents!!)
                 }
                 drawerLayout!!.closeDrawers()
             }
@@ -114,12 +130,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onClick(v: View?) {
-        when(v!!.id){
+        when (v!!.id) {
             R.id.tv_logout -> logout()
         }
     }
 
-    private fun initSpinner(){
+    private fun initSpinner() {
         val adapter: ArrayAdapter<String> =
             ArrayAdapter(
                 this,
@@ -144,7 +160,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             ) {
                 if (position != current) {
                     lang = LocaleHelper.languages[position]
-                    localeHelper.setLocale(baseContext,lang)
+                    localeHelper.setLocale(baseContext, lang)
                     restartActivity(baseContext)
                 }
             }
@@ -156,14 +172,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun logout() {
         SharedPrefManager.getInstance(this).logout()
         RetrofitClient.getInstance(this).api.logout()
-        val intent = Intent(this,AuthorizationActivity::class.java)
-        intent.putExtra("lang",lang)
+        val intent = Intent(this, AuthorizationActivity::class.java)
+        intent.putExtra("lang", lang)
         startActivity(intent)
         finish()
     }
 
-    private fun replacePage(fragment:Fragment){
+    private fun replacePage(fragment: Fragment) {
         fTrans = supportFragmentManager.beginTransaction()
-        fTrans.replace(R.id.fl_main,fragment).addToBackStack(null).commit()
+        fTrans.replace(R.id.fl_main, fragment).addToBackStack(null).commit()
     }
 }
