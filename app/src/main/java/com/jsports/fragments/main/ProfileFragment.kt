@@ -23,7 +23,7 @@ import retrofit2.Response
 
 class ProfileFragment : Fragment() {
 
-    private lateinit var user: User
+    lateinit var user: User
 
     private lateinit var loadingScreen: FrameLayout
 

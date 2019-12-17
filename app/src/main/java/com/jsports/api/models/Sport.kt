@@ -1,3 +1,5 @@
 package com.jsports.api.models
 
-class Sport(val id:Int,val sportsDiscipline:String)
+import java.io.Serializable
+
+class Sport(val id:Int,val sportsDiscipline:String) : Serializable

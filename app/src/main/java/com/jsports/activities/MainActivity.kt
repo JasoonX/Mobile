@@ -40,9 +40,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private val localeHelper: LocaleHelper = LocaleHelper()
     private var fTrans = supportFragmentManager.beginTransaction()
 
-    private lateinit var fragmentHome: Fragment
-    private var fragmentProfile: Fragment? = null
-    private var fragmentEvents: Fragment? = null
+    private lateinit var fragmentHome: HomeFragment
+    private var fragmentProfile: ProfileFragment? = null
+    private var fragmentEvents: EventsFragment? = null
 
     private lateinit var currentScreen: Fragment
 
@@ -95,7 +95,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item!!.itemId){
             R.id.mi_profile_settings ->{
+                val user = fragmentProfile!!.user
                 val intent = Intent(this,EditProfileActivity::class.java)
+                intent.putExtra(EditProfileActivity.USER_KEY,user)
                 startActivity(intent)
             }
         }
