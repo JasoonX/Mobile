@@ -19,7 +19,6 @@ import com.jsports.R
 import com.jsports.api.RetrofitClient
 import com.jsports.api.models.responses.BooleanResponse
 import com.jsports.dialogs.SimpleDialog
-import com.jsports.fragments.main.EditProfileFragment
 import com.jsports.fragments.main.EventsFragment
 import com.jsports.fragments.main.HomeFragment
 import com.jsports.fragments.main.ProfileFragment
@@ -96,7 +95,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item!!.itemId){
             R.id.mi_profile_settings ->{
-                replacePage(EditProfileFragment())
+                val intent = Intent(this,EditProfileActivity::class.java)
+                startActivity(intent)
             }
         }
 

@@ -44,6 +44,9 @@ interface Api {
     @GET("$usersBase/current")
     fun getCurrentUserProfile(): Call<User>
 
+    @PUT("$usersBase/current")
+    fun updateProfile(@Body request: User): Call<MessageResponse>
+
     @GET("$eventsBase/page/{page}")
     fun getEvents(
         @Path("page") page: Int,
