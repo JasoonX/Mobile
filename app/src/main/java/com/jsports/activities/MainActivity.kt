@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
-import com.jsports.LocaleHelper
+import com.jsports.helpers.LocaleHelper
 import com.jsports.R
 import com.jsports.api.RetrofitClient
 import com.jsports.api.models.responses.BooleanResponse
@@ -37,7 +37,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var navigationView: NavigationView
     private lateinit var tvLogout: TextView
     private var lang: String? = null
-    private val localeHelper: LocaleHelper = LocaleHelper()
+    private val localeHelper: LocaleHelper =
+        LocaleHelper()
     private var fTrans = supportFragmentManager.beginTransaction()
 
     private lateinit var fragmentHome: HomeFragment

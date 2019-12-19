@@ -2,6 +2,7 @@ package com.jsports.api
 
 import com.jsports.api.models.Page
 import com.jsports.api.models.User
+import com.jsports.api.models.requests.EditProfileRequest
 import com.jsports.api.models.requests.EventRequest
 import com.jsports.api.models.requests.LoginRequest
 import com.jsports.api.models.requests.RegisterRequest
@@ -45,7 +46,7 @@ interface Api {
     fun getCurrentUserProfile(): Call<User>
 
     @PUT("$usersBase/current")
-    fun updateProfile(@Body request: User): Call<MessageResponse>
+    fun updateProfile(@Body request: EditProfileRequest): Call<MessageResponse>
 
     @GET("$eventsBase/page/{page}")
     fun getEvents(

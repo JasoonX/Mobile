@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
-import com.jsports.LocaleHelper
+import com.jsports.helpers.LocaleHelper
 
 import com.jsports.R
 import com.jsports.api.RetrofitClient

@@ -3,6 +3,7 @@ package com.jsports.helpers
 import android.content.Context
 import android.content.Intent
 import com.jsports.api.RetrofitClient
+import com.jsports.api.models.Sport
 import com.jsports.api.models.responses.BooleanResponse
 import com.jsports.storage.SharedPrefManager
 import org.json.JSONObject
@@ -39,4 +40,13 @@ fun restartActivity(baseContext:Context){
     intent!!.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
     baseContext.startActivity(intent)
 
+}
+
+fun List<Sport>.contains(sportDiscipline:String):Boolean{
+    for(sport: Sport in this){
+        if(sport.sportsDiscipline == sportDiscipline){
+            return true
+        }
+    }
+    return false
 }

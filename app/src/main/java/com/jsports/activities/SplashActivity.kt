@@ -3,7 +3,7 @@ package com.jsports.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
-import com.jsports.LocaleHelper
+import com.jsports.helpers.LocaleHelper
 import com.jsports.storage.SharedPrefManager
 
 

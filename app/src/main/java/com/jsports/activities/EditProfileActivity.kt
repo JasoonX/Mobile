@@ -1,17 +1,34 @@
 package com.jsports.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
+import com.androidbuts.multispinnerfilter.MultiSpinner
 import com.jsports.R
+import com.jsports.api.RetrofitClient
+import com.jsports.api.models.Sport
 import com.jsports.api.models.User
 import com.jsports.api.models.requests.EditProfileRequest
+import com.jsports.api.models.responses.MessageResponse
+import com.jsports.dialogs.SimpleDialog
+import com.jsports.helpers.CustomRegex
+import com.jsports.helpers.LocaleHelper
+import com.jsports.helpers.contains
+import com.jsports.helpers.getErrorMessageFromJSON
+import com.jsports.storage.SharedPrefManager
+import es.dmoral.toasty.Toasty
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.time.LocalDate
 import java.util.*
+import kotlin.collections.LinkedHashMap
 
 
 class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
@@ -21,6 +38,8 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private lateinit var original: User
+    private var sportsDisciplines: LinkedHashMap<String, Boolean> = LinkedHashMap()
+    private var sportsDisciplinesStrings: MutableList<String> = mutableListOf()
     private lateinit var etFullName: EditText
     private lateinit var rbMale: RadioButton
     private lateinit var rbFemale: RadioButton
@@ -30,6 +49,9 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var etWeight: EditText
     private lateinit var etDate: EditText
     private lateinit var btSubmit: Button
+    private lateinit var sportsSpinner: MultiSpinner
+    private lateinit var loadingScreen: FrameLayout
+    private var selectedSports: MutableList<String> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,10 +70,34 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
         etWeight = findViewById(R.id.et_profile_weight)
         etDate = findViewById(R.id.et_profile_date)
 
+        loadingScreen = findViewById(R.id.ls_edit_profile)
+        loadingScreen.visibility = View.GONE
+
+        sportsSpinner = findViewById(R.id.spin_edit_profile)
+        for ((k, v) in LocaleHelper.disciplineStringResources) {
+            sportsDisciplines[getString(v)] = original.sports.contains(k)
+            sportsDisciplinesStrings.add(k)
+        }
+        initSportsSpinner()
+
         btSubmit = findViewById(R.id.bt_edit_profile)
         btSubmit.setOnClickListener(this)
 
         initOriginalData()
+    }
+
+    private fun initSportsSpinner() {
+        sportsSpinner.setItems(
+            sportsDisciplines
+        ) { selected ->
+            val selSports = mutableListOf<String>()
+            for (i in selected.indices) {
+                if (selected[i]) {
+                    selSports.add(sportsDisciplinesStrings[i])
+                }
+            }
+            selectedSports = selSports
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -84,10 +130,15 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun editProfilePressed() {
+        val dialog = SimpleDialog(this, getString(R.string.change_profile_message), {
+            editProfile()
+        })
 
+        dialog.show(supportFragmentManager, null)
     }
 
     private fun editProfile() {
+        loadingScreen.visibility = View.VISIBLE
         val fullName =
             if (etFullName.text.toString() != original.fullname)
                 etFullName.text.toString()
@@ -124,18 +175,64 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
                 etDate.text.toString()
             else null
 
+        val sports: MutableList<String> = mutableListOf()
+        for (sport in original.sports) {
+            if (selectedSports.contains(sport.sportsDiscipline)) {
+                sports.add(sport.sportsDiscipline)
+                selectedSports.remove(sport.sportsDiscipline)
+            }
+        }
+        if (selectedSports.isNotEmpty()) {
+            sports.addAll(selectedSports)
+        }
+
         val request = EditProfileRequest(
-            fullName, gender, username, height, weight, date, country, null
+            fullName, gender, username, height, weight, date, country, sports
         )
 
-        validateEditRequest(request)
+        if (validateEditRequest(request)) {
+            val call = RetrofitClient.getInstance(this).api.updateProfile(request)
 
+            call.enqueue(object : Callback<MessageResponse> {
+                override fun onFailure(call: Call<MessageResponse>, t: Throwable) {
+                    loadingScreen.visibility = View.GONE
+                    Toasty.error(
+                        this@EditProfileActivity,
+                        t.message!!,
+                        Toasty.LENGTH_LONG
+                    ).show()
+                }
 
+                override fun onResponse(
+                    call: Call<MessageResponse>,
+                    response: Response<MessageResponse>
+                ) {
+                    if (response.body() != null) {
+                        Toasty.success(
+                            this@EditProfileActivity,
+                            response.body()!!.message,
+                            Toasty.LENGTH_LONG
+                        ).show()
+                    } else {
+                        Toasty.error(
+                            this@EditProfileActivity,
+                            getErrorMessageFromJSON(response.errorBody()!!.string()),
+                            Toasty.LENGTH_LONG
+                        ).show()
+                    }
+                    loadingScreen.visibility = View.GONE
+                }
+
+            })
+        } else {
+            loadingScreen.visibility = View.GONE
+        }
     }
 
     private fun validateEditRequest(editProfileRequest: EditProfileRequest): Boolean {
-        val usernameRegex = Regex("""^[a-z0-9_-]{3,16}$""")
-        val dateRegex = Regex("""^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$""")
+        val usernameRegex = Regex(CustomRegex.USERNAME)
+        val fullnameRegex = Regex(CustomRegex.FULL_NAME)
+        val dateRegex = Regex(CustomRegex.DATE)
 
         val countryCodes = Locale.getISOCountries()
 
@@ -150,6 +247,7 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
             if (editProfileRequest.born != null) LocalDate.parse(editProfileRequest.born) else null
 
         when {
+
             editProfileRequest.fullname != null && editProfileRequest.fullname.isEmpty() -> {
                 etFullName.error = getString(R.string.ful_name_required)
                 return false
@@ -162,6 +260,11 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
 
             editProfileRequest.fullname != null && editProfileRequest.fullname.length < 5 -> {
                 etFullName.error = getString(R.string.full_name_short)
+                return false
+            }
+
+            editProfileRequest.fullname != null && !fullnameRegex.matches(editProfileRequest.fullname) -> {
+                etFullName.error = getString(R.string.wrong_full_name)
                 return false
             }
 

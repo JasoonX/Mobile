@@ -83,7 +83,7 @@
     <string name="s">s</string>
     <string name="no_comment">No comment</string>
     <string name="add">Add</string>
-    <string name="no_events_yet">No events yet.</string>
+    <string name="no_events_yet">No events yet</string>
     <string name="no_sport_disciplines">No sport disciplines</string>
     <string name="delete_event">Delete event</string>
     <string name="ok">OK</string>
@@ -97,4 +97,6 @@
     <string name="distance_required">Distance required</string>
     <string name="time_required">Time required</string>
     <string name="profile_settings">Profile Settings</string>
+    <string name="change_profile_message">Are you sure you want to change profile data?</string>
+    <string name="wrong_full_name">Wrong full name</string>
 </resources>

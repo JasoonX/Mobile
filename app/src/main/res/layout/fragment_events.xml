@@ -6,32 +6,6 @@
     tools:context=".fragments.main.EventsFragment">
 
     <LinearLayout
-        android:id="@+id/ll_no_events"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal"
-        android:visibility="visible">
-
-        <TextView
-            android:id="@+id/tv_no_events"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="@string/no_events_yet"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/tv_add_event"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add"
-            android:textColor="@color/colorPrimary"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -56,8 +30,8 @@
                 android:id="@+id/iv_add_event"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/add"
-                android:contentDescription="@string/add_event" />
+                android:contentDescription="@string/add_event"
+                android:src="@drawable/add" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -104,6 +78,34 @@
             android:layout_height="60dp"
             android:contentDescription="@string/next"
             android:src="@drawable/next" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_no_events"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/tv_no_events"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/no_events_yet"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_add_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp" />
     </LinearLayout>
 
 </FrameLayout>

@@ -15,6 +15,7 @@ import com.jsports.activities.MainActivity
 import com.jsports.api.RetrofitClient
 import com.jsports.api.models.requests.LoginRequest
 import com.jsports.api.models.responses.LoginResponse
+import com.jsports.helpers.CustomRegex
 import com.jsports.helpers.getErrorMessageFromJSON
 import com.jsports.storage.SharedPrefManager
 import es.dmoral.toasty.Toasty
@@ -131,7 +132,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
 
     private fun validateCredentials(username: String, password: String): Boolean {
 
-        val usernameRegex = Regex("""^[a-z0-9_-]{3,16}$""")
+        val usernameRegex = Regex(CustomRegex.USERNAME)
 
         when {
             username.isEmpty() -> {

@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.jsports.LocaleHelper
+import com.jsports.helpers.LocaleHelper
 import com.jsports.R
 import com.jsports.api.models.responses.SportStatisticsResponse
 

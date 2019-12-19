@@ -1,6 +1,7 @@
-package com.jsports
+package com.jsports.helpers
 
 import android.content.Context
+import com.jsports.R
 import com.jsports.storage.SharedPrefManager
 import java.util.*
 
@@ -9,7 +10,7 @@ class LocaleHelper {
 
     companion object {
         val languages = listOf("uk", "en")
-        val disciplineStringResources = mutableMapOf(
+        val disciplineStringResources = mapOf(
             "SWIMMING" to R.string.swimming,
             "CYCLING" to R.string.cycling,
             "ROWING" to R.string.rowing,

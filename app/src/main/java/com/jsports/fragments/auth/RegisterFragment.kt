@@ -13,6 +13,7 @@ import com.jsports.R
 import com.jsports.api.RetrofitClient
 import com.jsports.api.models.requests.RegisterRequest
 import com.jsports.api.models.responses.MessageResponse
+import com.jsports.helpers.CustomRegex
 import es.dmoral.toasty.Toasty
 import org.json.JSONObject
 import retrofit2.Call
@@ -155,8 +156,9 @@ class RegisterFragment : Fragment(), View.OnClickListener {
 
 
     private fun validateRegisterRequest(registerRequest: RegisterRequest): Boolean {
-        val usernameRegex = Regex("""^[a-z0-9_-]{3,16}$""")
-        val dateRegex = Regex("""^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$""")
+        val usernameRegex = Regex(CustomRegex.USERNAME)
+        val dateRegex = Regex(CustomRegex.DATE)
+        val fullnameRegex = Regex(CustomRegex.FULL_NAME)
 
         val countryCodes = Locale.getISOCountries()
 
@@ -171,6 +173,11 @@ class RegisterFragment : Fragment(), View.OnClickListener {
             if (registerRequest.born != null) LocalDate.parse(registerRequest.born) else null
 
         when {
+            !fullnameRegex.matches(registerRequest.fullname) -> {
+                etFullName.error = getString(R.string.wrong_full_name)
+                return false
+            }
+
             registerRequest.fullname.isEmpty() -> {
                 etFullName.error = getString(R.string.ful_name_required)
                 return false

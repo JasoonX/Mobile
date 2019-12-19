@@ -1,7 +1,6 @@
 package com.jsports.fragments.main
 
 
-import android.content.DialogInterface.OnShowListener
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.jsports.LocaleHelper
+import com.jsports.helpers.LocaleHelper
 import com.jsports.R
 import com.jsports.api.RetrofitClient
 import com.jsports.api.adapters.EventsAdapter
@@ -43,7 +42,7 @@ class EventsFragment : Fragment(), View.OnClickListener {
     private lateinit var tvNoEvents: TextView
     private lateinit var tvAddEvent: TextView
     private lateinit var spinnerDisciplines: Spinner
-    private lateinit var ivAddEvent:ImageView
+    private lateinit var ivAddEvent: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -161,20 +160,23 @@ class EventsFragment : Fragment(), View.OnClickListener {
     }
 
     private fun initEventsPageUI() {
+        val eventsAdapter = EventsAdapter(activity!!, eventsPage.content, ::deleteEventPressed)
         if (eventsPage.numberOfElements == 0) {
             tvNoEvents.text = getString(R.string.no_sport_disciplines)
             llNoEvents.visibility = View.VISIBLE
+
         } else {
-            val eventsAdapter = EventsAdapter(activity!!, eventsPage.content, ::deleteEventPressed)
-            rvEvents.adapter = eventsAdapter
+            llNoEvents.visibility = View.GONE
+
         }
+        rvEvents.adapter = eventsAdapter
     }
 
-    private fun deleteEventPressed(id:Long){
-        val dialog = SimpleDialog(activity!!,getString(R.string.delete_event_message),{
+    private fun deleteEventPressed(id: Long) {
+        val dialog = SimpleDialog(activity!!, getString(R.string.delete_event_message), {
             deleteEvent(id)
         })
-        dialog.show(activity!!.supportFragmentManager,null)
+        dialog.show(activity!!.supportFragmentManager, null)
     }
 
     private fun deleteEvent(id: Long) {
@@ -197,10 +199,10 @@ class EventsFragment : Fragment(), View.OnClickListener {
             ) {
                 if (response.body() != null) {
                     Toasty.success(activity!!, response.body()!!.message, Toasty.LENGTH_LONG).show()
-                    if(currentPage != 0 && eventsPage.numberOfElements == 1){
+                    if (currentPage != 0 && eventsPage.numberOfElements == 1) {
                         currentPage -= 1
                     }
-                    getEventsPage(currentPage,currentSportsDiscipline)
+                    getEventsPage(currentPage, currentSportsDiscipline)
                 } else {
                     Toasty.error(
                         activity!!,
@@ -247,16 +249,16 @@ class EventsFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    private fun addEventPressed(){
-        val dialog = AddEventDialog(currentSportsDiscipline,::addEvent)
-        dialog.show(activity!!.supportFragmentManager,null)
+    private fun addEventPressed() {
+        val dialog = AddEventDialog(currentSportsDiscipline, ::addEvent)
+        dialog.show(activity!!.supportFragmentManager, null)
     }
 
-    private fun addEvent(request: EventRequest){
+    private fun addEvent(request: EventRequest) {
         loadingScreen.visibility = View.VISIBLE
         val call = RetrofitClient.getInstance(activity!!).api.addEvent(request)
 
-        call.enqueue(object : Callback<MessageResponse>{
+        call.enqueue(object : Callback<MessageResponse> {
             override fun onFailure(call: Call<MessageResponse>, t: Throwable) {
                 loadingScreen.visibility = View.GONE
                 Toasty.error(
@@ -272,7 +274,7 @@ class EventsFragment : Fragment(), View.OnClickListener {
             ) {
                 if (response.body() != null) {
                     Toasty.success(activity!!, response.body()!!.message, Toasty.LENGTH_LONG).show()
-                    getEventsPage(currentPage,currentSportsDiscipline)
+                    getEventsPage(currentPage, currentSportsDiscipline)
                 } else {
                     Toasty.error(
                         activity!!,

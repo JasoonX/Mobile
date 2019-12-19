@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.FrameLayout
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
-import com.jsports.LocaleHelper
+import com.jsports.helpers.LocaleHelper
 import com.jsports.R
 import com.jsports.fragments.auth.LoginFragment
 import com.jsports.helpers.restartActivity
@@ -23,7 +23,8 @@ class AuthorizationActivity : AppCompatActivity() {
 
     private var lang:String? = null
 
-    private val localeHelper:LocaleHelper = LocaleHelper()
+    private val localeHelper: LocaleHelper =
+        LocaleHelper()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +65,8 @@ class AuthorizationActivity : AppCompatActivity() {
                 position: Int, id: Long
             ) {
                 if (position != current) {
-                    localeHelper.setLocale(baseContext,LocaleHelper.languages[position])
+                    localeHelper.setLocale(baseContext,
+                        LocaleHelper.languages[position])
                     restartActivity(baseContext)
                 }
             }
