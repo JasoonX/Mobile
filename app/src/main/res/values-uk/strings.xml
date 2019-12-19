@@ -105,4 +105,5 @@
     <string name="username_label">Ім\'я користувача:</string>
     <string name="jsports_users">JSports - Користувачі</string>
     <string name="see_events">Побачити події</string>
+    <string name="jsports_user_events">JSports - %1s події</string>
 </resources>

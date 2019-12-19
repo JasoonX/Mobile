@@ -15,7 +15,8 @@ import com.jsports.helpers.RetrofitCallback
 
 class EventsAdapter(private val context: Context,
                     private val events: List<EventResponse>,
-                    private val deleteEventPressed:(id:Long)->Unit) :
+                    private val deleteEventPressed:(id:Long)->Unit,
+                    private val isCurrentUserEvents:Boolean = true) :
     RecyclerView.Adapter<EventsAdapter.EventsViewHolder>() {
 
     class EventsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -82,5 +83,8 @@ class EventsAdapter(private val context: Context,
         holder.tvComment.text = comment
 
         holder.ivDeleteEvent.setOnClickListener { deleteEventPressed(event.id) }
+        if(!isCurrentUserEvents){
+            holder.ivDeleteEvent.visibility = View.GONE
+        }
     }
 }

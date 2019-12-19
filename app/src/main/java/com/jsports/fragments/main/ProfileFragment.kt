@@ -114,6 +114,11 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             R.id.tv_see_events -> {
                 val fTrans = activity!!.supportFragmentManager.beginTransaction()
                 val fragmentEvents = EventsFragment()
+                if(username != null){
+                    val args = Bundle()
+                    args.putString(USERNAME_KEY,username)
+                    fragmentEvents.arguments = args
+                }
                 val act = activity!! as MainActivity
                 act.miProfileSettings.isVisible = false
                 fTrans.replace(R.id.fl_main, fragmentEvents).addToBackStack(null).commit()

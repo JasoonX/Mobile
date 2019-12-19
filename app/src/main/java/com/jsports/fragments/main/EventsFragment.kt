@@ -44,6 +44,8 @@ class EventsFragment : Fragment(), View.OnClickListener {
     private lateinit var spinnerDisciplines: Spinner
     private lateinit var ivAddEvent: ImageView
 
+    private var username: String? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -75,12 +77,25 @@ class EventsFragment : Fragment(), View.OnClickListener {
         ivAddEvent = view.findViewById(R.id.iv_add_event)
         ivAddEvent.setOnClickListener(this)
 
+        if (arguments != null) {
+            username = arguments!!.getString(ProfileFragment.USERNAME_KEY)
+        }
+        if (username != null) {
+            tvAddEvent.visibility = View.GONE
+            ivAddEvent.visibility = View.GONE
+            activity!!.title = String.format(getString(R.string.jsports_user_events),username)
+        }
+
         getUser()
         return view
     }
 
     private fun getUser() {
-        val call = RetrofitClient.getInstance(activity!!).api.getCurrentUserProfile()
+        val call =
+            if (username != null)
+                RetrofitClient.getInstance(activity!!).api.getUserProfile(username!!)
+            else
+                RetrofitClient.getInstance(activity!!).api.getCurrentUserProfile()
 
         call.enqueue(object : Callback<User> {
             override fun onFailure(call: Call<User>, t: Throwable) {
@@ -118,7 +133,15 @@ class EventsFragment : Fragment(), View.OnClickListener {
 
     private fun getEventsPage(page: Int, sportsDiscipline: String) {
         loadingScreen.visibility = View.VISIBLE
-        val call = RetrofitClient.getInstance(activity!!).api.getEvents(page, sportsDiscipline)
+        val call =
+            if (username != null)
+                RetrofitClient.getInstance(activity!!).api.getUserEvents(
+                    username!!,
+                    page,
+                    sportsDiscipline
+                )
+            else
+                RetrofitClient.getInstance(activity!!).api.getEvents(page, sportsDiscipline)
 
         call.enqueue(object : Callback<Page<EventResponse>> {
             override fun onFailure(call: Call<Page<EventResponse>>, t: Throwable) {
@@ -160,7 +183,13 @@ class EventsFragment : Fragment(), View.OnClickListener {
     }
 
     private fun initEventsPageUI() {
-        val eventsAdapter = EventsAdapter(activity!!, eventsPage.content, ::deleteEventPressed)
+        val eventsAdapter =
+            EventsAdapter(
+                activity!!,
+                eventsPage.content,
+                ::deleteEventPressed,
+                username == null
+            )
         if (eventsPage.numberOfElements == 0) {
             tvNoEvents.text = getString(R.string.no_sport_disciplines)
             llNoEvents.visibility = View.VISIBLE

@@ -261,6 +261,6 @@
         android:layout_gravity="end"
         android:text="@string/see_events"
         android:textColor="@color/ColorPrimaryDark"
-        android:textSize="24sp" />
+        android:textSize="18sp" />
 
 </LinearLayout>

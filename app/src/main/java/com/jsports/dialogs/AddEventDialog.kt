@@ -58,6 +58,7 @@ class AddEventDialog(
                     )
                     addEvent(request)
                 }
+                dialog.dismiss()
             }
         }
         return created
