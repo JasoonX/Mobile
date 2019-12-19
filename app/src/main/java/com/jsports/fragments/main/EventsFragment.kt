@@ -324,6 +324,10 @@ class EventsFragment : Fragment(), View.OnClickListener {
 
     private fun goToCharts() {
         val fragment = ChartsFragment()
+        val args = Bundle()
+        val arrayList:ArrayList<String> = ArrayList(sportsDisciplines)
+        args.putStringArrayList(ChartsFragment.DISCIPLINES_KEY,arrayList)
+        fragment.arguments = args
         activity!!.supportFragmentManager.beginTransaction().addToBackStack(null)
             .replace(R.id.fl_main, fragment).commit()
     }

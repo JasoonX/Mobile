@@ -2,6 +2,7 @@ package com.jsports.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -11,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
-import com.jsports.helpers.LocaleHelper
 import com.jsports.R
 import com.jsports.api.RetrofitClient
 import com.jsports.api.models.responses.BooleanResponse
@@ -20,6 +20,7 @@ import com.jsports.fragments.main.EventsFragment
 import com.jsports.fragments.main.HomeFragment
 import com.jsports.fragments.main.ProfileFragment
 import com.jsports.fragments.main.UsersFragment
+import com.jsports.helpers.LocaleHelper
 import com.jsports.helpers.RetrofitCallback
 import com.jsports.helpers.isAuthenticated
 import com.jsports.helpers.restartActivity
@@ -165,7 +166,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if (position != current) {
                     lang = LocaleHelper.languages[position]
                     localeHelper.setLocale(baseContext, lang)
-                    restartActivity(baseContext)
+                    restartActivity(baseContext,this@MainActivity)
                 }
             }
 

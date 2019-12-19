@@ -67,7 +67,7 @@ class AuthorizationActivity : AppCompatActivity() {
                 if (position != current) {
                     localeHelper.setLocale(baseContext,
                         LocaleHelper.languages[position])
-                    restartActivity(baseContext)
+                    restartActivity(baseContext,this@AuthorizationActivity)
                 }
             }
 

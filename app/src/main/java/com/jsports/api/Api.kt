@@ -43,7 +43,7 @@ interface Api {
     fun getCurrentUserProfile(): Call<User>
 
     @GET("$usersBase/{username}")
-    fun getUserProfile(@Path("username") username:String): Call<User>
+    fun getUserProfile(@Path("username") username: String): Call<User>
 
     @GET("$usersBase/page/{page}")
     fun getUserProfiles(@Path("page") page: Int): Call<Page<User>>
@@ -58,22 +58,25 @@ interface Api {
     fun getEvents(
         @Path("page") page: Int,
         @Query("sportsDiscipline") sportsDiscipline: String,
-        @Query("orderBy") orderBy:String = "dateTime",
-        @Query("direction") direction:String = "DESC"
+        @Query("orderBy") orderBy: String = "dateTime",
+        @Query("direction") direction: String = "DESC"
     ): Call<Page<EventResponse>>
 
     @GET("$eventsBase/{username}/page/{page}")
     fun getUserEvents(
-        @Path("username") username:String,
+        @Path("username") username: String,
         @Path("page") page: Int,
         @Query("sportsDiscipline") sportsDiscipline: String,
-        @Query("orderBy") orderBy:String = "dateTime",
-        @Query("direction") direction:String = "DESC"
+        @Query("orderBy") orderBy: String = "dateTime",
+        @Query("direction") direction: String = "DESC"
     ): Call<Page<EventResponse>>
 
     @DELETE("$eventsBase/")
-    fun deleteEvent(@Query("id") id:Long) : Call<MessageResponse>
+    fun deleteEvent(@Query("id") id: Long): Call<MessageResponse>
 
     @POST("$eventsBase/")
-    fun addEvent(@Body request: EventRequest):Call<MessageResponse>
+    fun addEvent(@Body request: EventRequest): Call<MessageResponse>
+
+    @GET("$eventsBase/")
+    fun getEvents(@Query("sportsDiscipline") sportsDiscipline: String): Call<List<EventResponse>>
 }

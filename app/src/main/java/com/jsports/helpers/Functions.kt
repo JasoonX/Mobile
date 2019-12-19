@@ -1,5 +1,6 @@
 package com.jsports.helpers
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import com.jsports.api.RetrofitClient
@@ -34,12 +35,12 @@ fun isAuthenticated(context:Context, callback:RetrofitCallback<BooleanResponse>)
     })
 }
 
-fun restartActivity(baseContext:Context){
+fun restartActivity(baseContext:Context,activity: Activity){
     val intent = baseContext.packageManager
         .getLaunchIntentForPackage(baseContext.packageName)
     intent!!.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
     baseContext.startActivity(intent)
-
+    activity.finish()
 }
 
 fun List<Sport>.contains(sportDiscipline:String):Boolean{
