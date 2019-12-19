@@ -108,4 +108,5 @@
     <string name="jsports_users">JSports - Users</string>
     <string name="see_events">See events</string>
     <string name="jsports_user_events">JSports - %1s events</string>
+    <string name="jsports_charts">JSports - Charts</string>
 </resources>

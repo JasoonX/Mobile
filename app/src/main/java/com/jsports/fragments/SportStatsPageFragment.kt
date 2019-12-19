@@ -37,14 +37,14 @@ class SportStatsPageFragment(private val sportStatisticsResponse: SportStatistic
         tvEventsNum.text = sportStatisticsResponse.eventsCount.toString()
         tvYourEventsNum.text = sportStatisticsResponse.userEventsCount.toString()
 
-        var percen:Double = sportStatisticsResponse.userEventsPercent
-        if(percen.isNaN()){
-            percen = 0.0
+        var percent:Double = sportStatisticsResponse.userEventsPercent
+        if(percent.isNaN()){
+            percent = 0.0
         }
         tvYourEventsPercent.text =
             String.format(
                 getString(R.string.percent),
-                String.format("%.2f", percen)
+                String.format("%.2f", percent)
             )
         return view
     }

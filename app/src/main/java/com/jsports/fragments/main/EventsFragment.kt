@@ -43,6 +43,7 @@ class EventsFragment : Fragment(), View.OnClickListener {
     private lateinit var tvAddEvent: TextView
     private lateinit var spinnerDisciplines: Spinner
     private lateinit var ivAddEvent: ImageView
+    private lateinit var ivlineCharts: ImageView
 
     private var username: String? = null
 
@@ -77,13 +78,17 @@ class EventsFragment : Fragment(), View.OnClickListener {
         ivAddEvent = view.findViewById(R.id.iv_add_event)
         ivAddEvent.setOnClickListener(this)
 
+        ivlineCharts = view.findViewById(R.id.iv_line_charts)
+        ivlineCharts.setOnClickListener(this)
+
         if (arguments != null) {
             username = arguments!!.getString(ProfileFragment.USERNAME_KEY)
         }
         if (username != null) {
             tvAddEvent.visibility = View.GONE
             ivAddEvent.visibility = View.GONE
-            activity!!.title = String.format(getString(R.string.jsports_user_events),username)
+            ivlineCharts.visibility = View.GONE
+            activity!!.title = String.format(getString(R.string.jsports_user_events), username)
         }
 
         getUser()
@@ -317,6 +322,12 @@ class EventsFragment : Fragment(), View.OnClickListener {
         })
     }
 
+    private fun goToCharts() {
+        val fragment = ChartsFragment()
+        activity!!.supportFragmentManager.beginTransaction().addToBackStack(null)
+            .replace(R.id.fl_main, fragment).commit()
+    }
+
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.iv_next_events -> {
@@ -338,6 +349,8 @@ class EventsFragment : Fragment(), View.OnClickListener {
             R.id.tv_add_event -> addEventPressed()
 
             R.id.iv_add_event -> addEventPressed()
+
+            R.id.iv_line_charts -> goToCharts()
         }
     }
 }

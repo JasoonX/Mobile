@@ -19,10 +19,19 @@
             android:gravity="center"
             android:orientation="horizontal">
 
+            <ImageView
+                android:id="@+id/iv_line_charts"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:contentDescription="@string/add_event"
+                android:src="@drawable/line_chart" />
+
             <Spinner
                 android:id="@+id/spin_sport_disciplines"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:gravity="center" />
 
