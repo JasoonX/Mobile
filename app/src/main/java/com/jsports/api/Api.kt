@@ -39,14 +39,20 @@ interface Api {
     @POST("$usersBase/logout")
     fun logout(): Call<MessageResponse>
 
-    @GET("$sportsBase/all")
-    fun getSportStatistics(): Call<List<SportStatisticsResponse>>
-
     @GET("$usersBase/current")
     fun getCurrentUserProfile(): Call<User>
 
+    @GET("$usersBase/{username}")
+    fun getUserProfile(@Path("username") username:String): Call<User>
+
+    @GET("$usersBase/page/{page}")
+    fun getUserProfiles(@Path("page") page: Int): Call<Page<User>>
+
     @PUT("$usersBase/current")
     fun updateProfile(@Body request: EditProfileRequest): Call<MessageResponse>
+
+    @GET("$sportsBase/all")
+    fun getSportStatistics(): Call<List<SportStatisticsResponse>>
 
     @GET("$eventsBase/page/{page}")
     fun getEvents(

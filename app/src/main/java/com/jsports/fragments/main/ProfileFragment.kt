@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -12,6 +13,7 @@ import android.widget.TextView
 import com.jsports.helpers.LocaleHelper
 
 import com.jsports.R
+import com.jsports.activities.MainActivity
 import com.jsports.api.RetrofitClient
 import com.jsports.api.models.User
 import com.jsports.helpers.getErrorMessageFromJSON
@@ -21,9 +23,11 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), View.OnClickListener {
 
     lateinit var user: User
+
+    private var username: String? = null
 
     private lateinit var loadingScreen: FrameLayout
 
@@ -36,6 +40,7 @@ class ProfileFragment : Fragment() {
     private lateinit var tvCountryLabel: TextView
     private lateinit var tvSportsLabel: TextView
 
+    private lateinit var tvFullName:TextView
     private lateinit var tvUsername: TextView
     private lateinit var tvGender: TextView
     private lateinit var tvEmail: TextView
@@ -44,6 +49,7 @@ class ProfileFragment : Fragment() {
     private lateinit var tvDate: TextView
     private lateinit var tvCountry: TextView
     private lateinit var tvSports: TextView
+    private lateinit var tvSeeEvents: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,7 +70,7 @@ class ProfileFragment : Fragment() {
         tvCountryLabel = view.findViewById(R.id.tv_country_label)
         tvSportsLabel = view.findViewById(R.id.tv_sports_label)
 
-
+        tvFullName = view.findViewById(R.id.tv_fullname)
         tvUsername = view.findViewById(R.id.tv_username)
         tvGender = view.findViewById(R.id.tv_gender)
         tvEmail = view.findViewById(R.id.tv_email)
@@ -74,12 +80,55 @@ class ProfileFragment : Fragment() {
         tvCountry = view.findViewById(R.id.tv_country)
         tvSports = view.findViewById(R.id.tv_sports)
 
+        tvSeeEvents = view.findViewById(R.id.tv_see_events)
+        tvSeeEvents.setOnClickListener(this)
+
+        val args = arguments
+        if (args != null) {
+            val un = args.getString(USERNAME_KEY)
+            if (un != null) {
+                username = un
+            }
+        }
         getUser()
         return view
     }
 
+    companion object {
+        const val USERNAME_KEY = "user_username"
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val mi = (activity!! as MainActivity).miProfileSettings
+        mi.isVisible = username == null
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity!! as MainActivity).miProfileSettings.isVisible = false
+    }
+
+    override fun onClick(v: View?) {
+        when (v!!.id) {
+            R.id.tv_see_events -> {
+                val fTrans = activity!!.supportFragmentManager.beginTransaction()
+                val fragmentEvents = EventsFragment()
+                val act = activity!! as MainActivity
+                act.miProfileSettings.isVisible = false
+                fTrans.replace(R.id.fl_main, fragmentEvents).addToBackStack(null).commit()
+            }
+        }
+    }
+
     private fun getUser() {
-        val call = RetrofitClient.getInstance(activity!!).api.getCurrentUserProfile()
+        loadingScreen.visibility = View.VISIBLE
+        val call =
+            if (username != null) {
+                RetrofitClient.getInstance(activity!!).api.getUserProfile(username!!)
+            } else {
+                RetrofitClient.getInstance(activity!!).api.getCurrentUserProfile()
+            }
 
         call.enqueue(object : Callback<User> {
             override fun onFailure(call: Call<User>, t: Throwable) {
@@ -109,6 +158,8 @@ class ProfileFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun setProfileData() {
+
+        tvFullName.text = user.fullname
         tvUsernameLabel.text = "${getString(R.string.username)}:"
         tvGenderLabel.text = "${getString(R.string.gender)}:"
         tvEmailLabel.text = "${getString(R.string.email)}:"
@@ -157,10 +208,10 @@ class ProfileFragment : Fragment() {
             for (sport in sports) {
                 sportsString += "${getString(LocaleHelper.disciplineStringResources[sport.sportsDiscipline]!!)}, "
             }
-        }else{
+        } else {
             sportsString = getString(R.string.not_set)
         }
-        sportsString = sportsString.substring(0,sportsString.length-2)
+        sportsString = sportsString.substring(0, sportsString.length - 2)
         tvSports.text = sportsString
     }
 }

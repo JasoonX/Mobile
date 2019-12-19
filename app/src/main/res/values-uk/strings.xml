@@ -97,4 +97,12 @@
     <string name="profile_settings">Редагування профілю</string>
     <string name="change_profile_message">Ви впевнені, що хочете змінити дані профілю?</string>
     <string name="wrong_full_name">Неправильне повне ім\'я</string>
+    <string name="users">Користувачі</string>
+    <string name="country_label">Країна:</string>
+    <string name="full_name_label">Повне ім\'я:</string>
+    <string name="gender_label">Стать:</string>
+    <string name="see_more">Побачити більше</string>
+    <string name="username_label">Ім\'я користувача:</string>
+    <string name="jsports_users">JSports - Користувачі</string>
+    <string name="see_events">Побачити події</string>
 </resources>

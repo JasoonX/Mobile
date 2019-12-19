@@ -99,4 +99,12 @@
     <string name="profile_settings">Profile Settings</string>
     <string name="change_profile_message">Are you sure you want to change profile data?</string>
     <string name="wrong_full_name">Wrong full name</string>
+    <string name="users">Users</string>
+    <string name="full_name_label">Full name:</string>
+    <string name="username_label">Username:</string>
+    <string name="see_more">See more</string>
+    <string name="country_label">Country:</string>
+    <string name="gender_label">Gender:</string>
+    <string name="jsports_users">JSports - Users</string>
+    <string name="see_events">See events</string>
 </resources>

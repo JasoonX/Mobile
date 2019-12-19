@@ -22,6 +22,7 @@ import com.jsports.dialogs.SimpleDialog
 import com.jsports.fragments.main.EventsFragment
 import com.jsports.fragments.main.HomeFragment
 import com.jsports.fragments.main.ProfileFragment
+import com.jsports.fragments.main.UsersFragment
 import com.jsports.helpers.RetrofitCallback
 import com.jsports.helpers.isAuthenticated
 import com.jsports.helpers.restartActivity
@@ -44,10 +45,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var fragmentHome: HomeFragment
     private var fragmentProfile: ProfileFragment? = null
     private var fragmentEvents: EventsFragment? = null
+    private var fragmentUsers: UsersFragment? = null
 
-    private lateinit var currentScreen: Fragment
-
-    private lateinit var miProfileSettings:MenuItem
+    lateinit var miProfileSettings:MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +69,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         })
 
         fragmentHome = HomeFragment()
-        currentScreen = fragmentHome
 
         fTrans.add(R.id.fl_main, fragmentHome).commit()
 
@@ -111,31 +110,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.mi_profile -> {
-                if (currentScreen != fragmentProfile) {
-                    if (fragmentProfile == null) {
-                        fragmentProfile = ProfileFragment()
-                    }
-                    currentScreen = fragmentProfile!!
-                    replacePage(fragmentProfile!!)
-                }
+                fragmentProfile = ProfileFragment()
+                replacePage(fragmentProfile!!)
                 drawerLayout.closeDrawers()
             }
             R.id.mi_home -> {
-                if (currentScreen != fragmentHome) {
-                    currentScreen = fragmentHome
-                    replacePage(fragmentHome)
-                }
+                fragmentHome = HomeFragment()
+                replacePage(fragmentHome)
                 drawerLayout.closeDrawers()
             }
 
             R.id.mi_events -> {
-                if(currentScreen != fragmentEvents){
-                    if(fragmentEvents == null){
-                        fragmentEvents = EventsFragment()
-                    }
-                    currentScreen = fragmentEvents!!
-                    replacePage(fragmentEvents!!)
-                }
+                fragmentEvents = EventsFragment()
+                replacePage(fragmentEvents!!)
+                drawerLayout.closeDrawers()
+            }
+
+            R.id.mi_users -> {
+                fragmentUsers = UsersFragment()
+                replacePage(fragmentUsers!!)
                 drawerLayout.closeDrawers()
             }
             else -> return true

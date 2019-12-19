@@ -10,5 +10,8 @@
     <item
         android:id="@+id/mi_events"
         android:title="@string/events" />
+    <item
+        android:id="@+id/mi_users"
+        android:title="@string/users" />
 
 </menu>

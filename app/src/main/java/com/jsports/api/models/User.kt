@@ -10,6 +10,7 @@ class User(
     val height:Float?,
     val weight:Float?,
     val born:String?,
+    val roles:List<String>,
     val country:String?,
     val sports:List<Sport>
 ) : Serializable

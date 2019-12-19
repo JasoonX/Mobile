@@ -254,4 +254,13 @@
             tools:ignore="HardcodedText" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_see_events"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="@string/see_events"
+        android:textColor="@color/ColorPrimaryDark"
+        android:textSize="24sp" />
+
 </LinearLayout>

@@ -56,7 +56,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
             override fun onPageSelected(position: Int) {
                 onPageChanged(position)
             }
-
         })
 
         previous = view.findViewById(R.id.iv_previous)
@@ -65,9 +64,12 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         next = view.findViewById(R.id.iv_next)
         next.setOnClickListener(this)
-
-        getSportStatistics()
         return view
+    }
+
+    override fun onStart() {
+        super.onStart()
+        getSportStatistics()
     }
 
     private fun onPageChanged(page: Int) {
