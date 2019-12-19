@@ -18,7 +18,8 @@
         android:id="@+id/ls_main"
         layout="@layout/loading_screen"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="visible" />
 
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
@@ -32,23 +33,44 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:gravity="end"
+            android:layout_marginStart="12dp"
             android:clickable="true"
+            android:gravity="center"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_logout"
+            <LinearLayout
+                android:id="@+id/ll_logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAlignment="textEnd"
-                android:text="@string/logout"
-                android:layout_marginEnd="16dp"
-                android:textSize="18sp" />
+                android:gravity="center"
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    app:srcCompat="@drawable/logout"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/logout"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
             <Spinner
                 android:id="@+id/spin_languages_main"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
     </com.google.android.material.navigation.NavigationView>

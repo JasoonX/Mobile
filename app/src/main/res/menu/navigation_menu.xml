@@ -1,17 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/mi_home"
-        android:title="@string/home" />
+        android:icon="@drawable/home"
+        android:title="@string/home"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/mi_profile"
-        android:title="@string/profile" />
+        android:icon="@drawable/user"
+        android:title="@string/profile"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/mi_events"
-        android:title="@string/events" />
+        android:icon="@drawable/event"
+        android:title="@string/events"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/mi_users"
-        android:title="@string/users" />
+        android:icon="@drawable/users"
+        android:title="@string/users"
+        app:showAsAction="ifRoom" />
 
 </menu>

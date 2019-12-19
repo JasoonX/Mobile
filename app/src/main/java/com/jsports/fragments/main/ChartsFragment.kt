@@ -19,6 +19,4 @@ class ChartsFragment : Fragment() {
         activity!!.title = getString(R.string.jsports_charts)
         return inflater.inflate(R.layout.fragment_charts, container, false)
     }
-
-
 }

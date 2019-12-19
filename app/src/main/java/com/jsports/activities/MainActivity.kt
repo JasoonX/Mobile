@@ -5,10 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
@@ -36,7 +33,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var navigationView: NavigationView
-    private lateinit var tvLogout: TextView
+    private lateinit var llLogout: LinearLayout
     private var lang: String? = null
     private val localeHelper: LocaleHelper =
         LocaleHelper()
@@ -88,8 +85,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView = findViewById(R.id.nv)
         navigationView.setNavigationItemSelectedListener(this)
 
-        tvLogout = findViewById(R.id.tv_logout)
-        tvLogout.setOnClickListener(this)
+        llLogout = findViewById(R.id.ll_logout)
+        llLogout.setOnClickListener(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -138,7 +135,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onClick(v: View?) {
         when (v!!.id) {
-            R.id.tv_logout -> logoutPressed()
+            R.id.ll_logout -> logoutPressed()
         }
     }
 
