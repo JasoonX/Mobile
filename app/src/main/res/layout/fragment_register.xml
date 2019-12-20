@@ -34,19 +34,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="*"
+                    android:text="@string/star"
                     android:textColor="@android:color/holo_red_dark"
                     android:textSize="18sp" />
             </LinearLayout>
 
             <EditText
                 android:id="@+id/et_register_fullname"
+                style="@style/TextInput"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:ems="10"
                 android:hint="@string/full_name"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                tools:ignore="Autofill" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -61,11 +63,11 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_weight="1"
-                    android:text="*"
+                    android:text="@string/star"
                     android:textColor="@android:color/holo_red_dark"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -102,23 +104,25 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_weight="1"
-                    android:text="*"
+                    android:text="@string/star"
                     android:textColor="@android:color/holo_red_dark"
                     android:textSize="18sp" />
             </LinearLayout>
 
             <EditText
                 android:id="@+id/et_register_username"
+                style="@style/TextInput"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:ems="10"
                 android:hint="@string/username"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                tools:ignore="Autofill" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -133,23 +137,25 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_weight="1"
-                    android:text="*"
+                    android:text="@string/star"
                     android:textColor="@android:color/holo_red_dark"
                     android:textSize="18sp" />
             </LinearLayout>
 
             <EditText
                 android:id="@+id/et_register_password"
+                style="@style/TextInput"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:ems="10"
                 android:hint="@string/password"
-                android:inputType="textShortMessage|textPersonName|text|textPassword|textEmailAddress" />
+                android:inputType="textShortMessage|textPersonName|text|textPassword|textEmailAddress"
+                android:autofillHints="" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -164,23 +170,25 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_weight="1"
-                    android:text="*"
+                    android:text="@string/star"
                     android:textColor="@android:color/holo_red_dark"
                     android:textSize="18sp" />
             </LinearLayout>
 
             <EditText
                 android:id="@+id/et_register_confirm_password"
+                style="@style/TextInput"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:ems="10"
                 android:hint="@string/confirm_password"
-                android:inputType="textShortMessage|textPersonName|text|textPassword|textEmailAddress" />
+                android:inputType="textShortMessage|textPersonName|text|textPassword|textEmailAddress"
+                android:autofillHints="" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -195,23 +203,25 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_weight="1"
-                    android:text="*"
+                    android:text="@string/star"
                     android:textColor="@android:color/holo_red_dark"
                     android:textSize="18sp" />
             </LinearLayout>
 
             <EditText
                 android:id="@+id/et_register_email"
+                style="@style/TextInput"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:ems="10"
                 android:hint="@string/email"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:autofillHints="" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -222,12 +232,14 @@
 
             <EditText
                 android:id="@+id/et_register_country"
+                style="@style/TextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:ems="10"
                 android:hint="@string/country"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:autofillHints="" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -238,12 +250,14 @@
 
             <EditText
                 android:id="@+id/et_register_height"
+                style="@style/TextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:ems="10"
                 android:hint="@string/height"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:autofillHints="" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -254,12 +268,14 @@
 
             <EditText
                 android:id="@+id/et_register_weight"
+                style="@style/TextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:ems="10"
                 android:hint="@string/weight"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:autofillHints="" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -270,11 +286,13 @@
 
             <EditText
                 android:id="@+id/et_register_date"
+                style="@style/TextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/yyyy_mm_dd"
-                android:inputType="date" />
+                android:inputType="date"
+                android:autofillHints="" />
 
         </LinearLayout>
 
@@ -302,6 +320,7 @@
 
         <Button
             android:id="@+id/bt_register"
+            style="@style/SubmitButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

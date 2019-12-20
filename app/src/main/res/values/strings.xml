@@ -110,4 +110,6 @@
     <string name="jsports_user_events">JSports - %1s events</string>
     <string name="jsports_charts">JSports - Charts</string>
     <string name="not_enough_chart_data">Not enough data to build any charts</string>
+    <string name="register_noun">Register</string>
+    <string name="star" translatable="false">*</string>
 </resources>

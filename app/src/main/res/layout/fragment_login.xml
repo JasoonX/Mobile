@@ -8,6 +8,8 @@
     android:layout_marginEnd="8dp"
     android:gravity="center"
     android:orientation="vertical"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
     tools:context=".fragments.auth.LoginFragment">
 
 
@@ -18,21 +20,25 @@
 
         <EditText
             android:id="@+id/et_login_username"
+            style="@style/TextInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:ems="10"
             android:hint="@string/username"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            tools:ignore="Autofill" />
 
         <EditText
             android:id="@+id/et_login_password"
+            style="@style/TextInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:ems="10"
             android:hint="@string/password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            tools:ignore="Autofill" />
 
         <TextView
             android:id="@+id/tv_forgot_pass"
@@ -45,6 +51,7 @@
 
         <Button
             android:id="@+id/bt_login"
+            style="@style/SubmitButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.jsports.helpers.LocaleHelper
 import com.jsports.R
 import com.jsports.fragments.auth.LoginFragment
+import com.jsports.fragments.auth.RegisterFragment
 import com.jsports.helpers.restartActivity
 
 
@@ -75,5 +76,19 @@ class AuthorizationActivity : AppCompatActivity() {
         }
 
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        fTrans = supportFragmentManager.beginTransaction()
+        when(item.itemId){
+            R.id.mi_login -> {
+                fTrans.replace(R.id.fl_auth,LoginFragment()).addToBackStack(null).commit()
+            }
+
+            R.id.mi_register -> {
+                fTrans.replace(R.id.fl_auth,RegisterFragment()).addToBackStack(null).commit()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
