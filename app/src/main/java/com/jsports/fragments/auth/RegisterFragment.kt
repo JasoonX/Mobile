@@ -1,6 +1,9 @@
 package com.jsports.fragments.auth
 
 
+import android.annotation.SuppressLint
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
 import android.os.Bundle
 import android.util.Patterns
 import android.view.LayoutInflater
@@ -20,6 +23,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.time.LocalDate
+import java.time.temporal.ChronoField
 import java.util.*
 import java.util.regex.Pattern
 
@@ -40,6 +44,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
     private lateinit var etHeight: EditText
     private lateinit var etWeight: EditText
     private lateinit var etDateOfBirth: EditText
+    private lateinit var ivDate: ImageView
     private lateinit var btSubmit: Button
 
 
@@ -70,6 +75,9 @@ class RegisterFragment : Fragment(), View.OnClickListener {
         etWeight = view.findViewById(R.id.et_register_weight)
         etDateOfBirth = view.findViewById(R.id.et_register_date)
 
+        ivDate = view.findViewById(R.id.iv_register_date)
+        ivDate.setOnClickListener(this)
+
         btSubmit = view.findViewById(R.id.bt_register)
         btSubmit.setOnClickListener(this)
 
@@ -85,7 +93,29 @@ class RegisterFragment : Fragment(), View.OnClickListener {
             ).addToBackStack(null).commit()
 
             R.id.bt_register -> register()
+
+            R.id.iv_register_date -> pickDate()
         }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun pickDate() {
+        val calendar = Calendar.getInstance()
+        val cYear = calendar.get(Calendar.YEAR)
+        val cMonth = calendar.get(Calendar.MONTH)
+        val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+        val datePickerDialog = DatePickerDialog(
+            activity!!,
+            OnDateSetListener { _, year, month, day ->
+                etDateOfBirth
+                    .setText("$year-${if (month < 10) "0" else ""}${(month + 1)}-${if (day < 10) "0" else ""}$day")
+            },
+            cYear,
+            cMonth,
+            dayOfMonth
+        )
+
+        datePickerDialog.show()
     }
 
     private fun register() {

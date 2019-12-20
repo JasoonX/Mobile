@@ -284,15 +284,28 @@
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
-            <EditText
-                android:id="@+id/et_register_date"
-                style="@style/TextInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/yyyy_mm_dd"
-                android:inputType="date"
-                android:autofillHints="" />
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_register_date"
+                    style="@style/TextInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:hint="@string/yyyy_mm_dd"
+                    android:inputType="date" />
+
+                <ImageView
+                    android:id="@+id/iv_register_date"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:src="@drawable/calendar"
+                    android:contentDescription="@string/pick_date" />
+            </FrameLayout>
 
         </LinearLayout>
 
