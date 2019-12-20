@@ -26,14 +26,32 @@
                 android:contentDescription="@string/add_event"
                 android:src="@drawable/line_chart" />
 
-            <Spinner
-                android:id="@+id/spin_sport_disciplines"
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:gravity="center" />
+                android:background="@drawable/spinner_background">
+
+                <Spinner
+                    android:id="@+id/spin_sport_disciplines"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:paddingEnd="40dp"
+                    android:paddingStart="40dp"/>
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:src="@drawable/dropdown"
+                    tools:ignore="ContentDescription" />
+
+            </RelativeLayout>
 
             <ImageView
                 android:id="@+id/iv_add_event"
